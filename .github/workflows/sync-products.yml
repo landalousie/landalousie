@@ -1,0 +1,12 @@
+name: Sync products from Content Island
+
+on:
+  repository_dispatch:
+    types: [sync-products]
+
+jobs:
+  sync-products:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync products
+        run: curl -X POST https://landalousie-6b7w.vercel.app/products

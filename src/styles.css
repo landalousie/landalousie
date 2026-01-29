@@ -1,0 +1,241 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --step--2: clamp(0.8247rem, 0.8445rem + -0.022vw, 0.8395rem);
+  --step--1: clamp(0.9444rem, 0.9294rem + 0.0669vw, 1rem);
+  --step-0: clamp(1.0625rem, 1.0208rem + 0.1852vw, 1.1875rem);
+  --step-1: clamp(1.1953rem, 1.1188rem + 0.3403vw, 1.425rem);
+  --step-2: clamp(1.3447rem, 1.223rem + 0.5411vw, 1.71rem);
+  --step-3: clamp(1.5128rem, 1.3331rem + 0.7988vw, 2.052rem);
+  --step-4: clamp(1.7019rem, 1.4484rem + 1.1266vw, 2.4624rem);
+  --step-5: clamp(1.9147rem, 1.5679rem + 1.5411vw, 2.9549rem);
+  --step-6: clamp(2.154rem, 1.69rem + 2.062vw, 3.5459rem);
+
+  --color-primary: #4a6741;
+  --color-secondary: #c17c59;
+
+  --color-primary-50: hsl(
+    from var(--color-primary) h calc(s + 17) calc(l + 62)
+  );
+  --color-primary-100: hsl(
+    from var(--color-primary) h calc(s + 18) calc(l + 55)
+  );
+  --color-primary-200: hsl(
+    from var(--color-primary) h calc(s + 20) calc(l + 43)
+  );
+  --color-primary-300: hsl(
+    from var(--color-primary) h calc(s + 21) calc(l + 30)
+  );
+  --color-primary-400: hsl(
+    from var(--color-primary) h calc(s - 3) calc(l + 13)
+  );
+  --color-primary-500: var(--color-primary);
+  --color-primary-600: hsl(from var(--color-primary) h calc(s + 2) calc(l - 7));
+  --color-primary-700: hsl(
+    from var(--color-primary) h calc(s + 4) calc(l - 13)
+  );
+  --color-primary-800: hsl(
+    from var(--color-primary) h calc(s + 10) calc(l - 19)
+  );
+  --color-primary-900: hsl(
+    from var(--color-primary) h calc(s + 16) calc(l - 24)
+  );
+  --color-primary-950: hsl(
+    from var(--color-primary) h calc(s + 24) calc(l - 28)
+  );
+
+  --color-secondary-50: hsl(
+    from var(--color-secondary) h calc(s + 17) calc(l + 62)
+  );
+  --color-secondary-100: hsl(
+    from var(--color-secondary) h calc(s + 18) calc(l + 55)
+  );
+  --color-secondary-200: hsl(
+    from var(--color-secondary) h calc(s + 20) calc(l + 43)
+  );
+  --color-secondary-300: hsl(
+    from var(--color-secondary) h calc(s + 21) calc(l + 30)
+  );
+  --color-secondary-400: hsl(
+    from var(--color-secondary) h calc(s - 3) calc(l + 13)
+  );
+  --color-secondary-500: var(--color-secondary);
+  --color-secondary-600: hsl(
+    from var(--color-secondary) h calc(s + 2) calc(l - 7)
+  );
+  --color-secondary-700: hsl(
+    from var(--color-secondary) h calc(s + 4) calc(l - 13)
+  );
+  --color-secondary-800: hsl(
+    from var(--color-secondary) h calc(s + 10) calc(l - 19)
+  );
+  --color-secondary-900: hsl(
+    from var(--color-secondary) h calc(s + 16) calc(l - 24)
+  );
+  --color-secondary-950: hsl(
+    from var(--color-secondary) h calc(s + 24) calc(l - 28)
+  );
+
+  /* Organic Backgrounds */
+  --color-background: #fdfbf7; /* Crema natural */
+  --color-surface: #f4efe6; /* Beige suave para componentes */
+
+  --color-text: #1a1614; /* Casi negro cálido */
+  --font-title: 'Instrument Sans', sans-serif;
+  --font-body: 'Geist', 'Noto Color Emoji', sans-serif;
+}
+
+:root.dark {
+  /* Dark Mode - Tierra profundo */
+  --color-background: #1c1917; /* Stone 900 modified - Warm dark */
+  --color-surface: #292524; /* Stone 800 modified */
+
+  --color-text: #fdfbf7; /* Crema claro para texto en modo oscuro */
+}
+
+@theme {
+  --color-background: var(--color-background);
+  --color-surface: var(--color-surface);
+}
+
+/* Tailwind theme variables */
+@theme {
+  --color-primary-50: var(--color-primary-50);
+  --color-primary-100: var(--color-primary-100);
+  --color-primary-200: var(--color-primary-200);
+  --color-primary-300: var(--color-primary-300);
+  --color-primary-400: var(--color-primary-400);
+  --color-primary-500: var(--color-primary-500);
+  --color-primary-600: var(--color-primary-600);
+  --color-primary-700: var(--color-primary-700);
+  --color-primary-800: var(--color-primary-800);
+  --color-primary-900: var(--color-primary-900);
+  --color-primary-950: var(--color-primary-950);
+
+  --color-secondary-50: var(--color-secondary-50);
+  --color-secondary-100: var(--color-secondary-100);
+  --color-secondary-200: var(--color-secondary-200);
+  --color-secondary-300: var(--color-secondary-300);
+  --color-secondary-400: var(--color-secondary-400);
+  --color-secondary-500: var(--color-secondary-500);
+  --color-secondary-600: var(--color-secondary-600);
+  --color-secondary-700: var(--color-secondary-700);
+  --color-secondary-800: var(--color-secondary-800);
+  --color-secondary-900: var(--color-secondary-900);
+  --color-secondary-950: var(--color-secondary-950);
+
+  --font-title: var(--font-title);
+  --font-body: var(--font-body);
+
+  --text-xs: var(--step--2);
+  --text-sm: var(--step--1);
+  --text-base: var(--step-0);
+  --text-lg: var(--step-1);
+  --text-xl: var(--step-2);
+  --text-2xl: var(--step-3);
+  --text-3xl: var(--step-4);
+  --text-4xl: var(--step-5);
+  --text-5xl: var(--step-6);
+
+  --color-tbase-500: var(--color-text);
+
+  --shadow-sm: 0 1px 2px 0 hsl(from var(--color-primary-700) h s l / 0.05);
+  --shadow-md:
+    0 4px 6px -1px hsl(from var(--color-primary-700) h s l / 0.1),
+    0 2px 4px -1px hsl(from var(--color-primary-700) h s l / 0.06);
+  --shadow-lg:
+    0 10px 15px -3px hsl(from var(--color-primary-700) h s l / 0.1),
+    0 4px 6px -2px hsl(from var(--color-primary-700) h s l / 0.05);
+
+  --radius-4xl: 1.75rem;
+  --radius-3xl: 1.5rem;
+  --radius-2xl: 1.25rem;
+}
+
+@layer components {
+  .marked {
+    @apply text-base leading-relaxed;
+    h1 {
+      @apply text-tbase-500/90 mt-8 mb-6 text-3xl leading-tight font-bold;
+    }
+
+    h2 {
+      @apply text-tbase-500/90 mt-8 mb-4 text-2xl leading-tight font-bold;
+    }
+
+    h3 {
+      @apply text-tbase-500/90 mt-6 mb-3 text-xl leading-tight font-semibold;
+    }
+
+    p {
+      @apply mb-4;
+    }
+
+    img {
+      @apply mt-6 mr-auto mb-6 ml-auto h-auto rounded-lg;
+    }
+
+    ul {
+      @apply mb-4 ml-6 list-disc space-y-1;
+    }
+
+    ol {
+      @apply mb-4 ml-6 list-decimal space-y-1;
+    }
+
+    blockquote {
+      @apply text-tbase-500/70 mt-6 mb-6 border-l-4 border-gray-300 pl-4 italic;
+    }
+
+    hr {
+      @apply my-8 border-gray-300;
+    }
+
+    a {
+      @apply text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-500 underline decoration-[1.4px] underline-offset-2 transition-all;
+    }
+
+    pre {
+      @apply text-sm;
+    }
+
+    code.hljs {
+      @apply dark:!bg-gray-800;
+    }
+    code:not(pre code) {
+      @apply rounded bg-gray-200 px-1.5 py-1 font-mono text-sm dark:bg-neutral-700;
+    }
+  }
+}
+
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+  font-weight: 300;
+}
+
+/* Base styles */
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  transition-property: background-color, color;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-in-out;
+  min-width: 360px;
+  font-size: var(--text-base);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-title);
+}

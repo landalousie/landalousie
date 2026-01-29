@@ -1,0 +1,39 @@
+export interface Translations {
+  id: string;
+  language: 'fr';
+  lastUpdate: string; // Stores the date in ISO 8601 format. For example: 2021-09-10T19:30:00.000Z
+  'header.logo-title': string;
+  'header.about.link': string;
+  'header.a11y.title-link-label': string;
+  'header.a11y.theme-button': string;
+  'footer.logo-title': string;
+  'footer.copy': string;
+  'product-detail.navigate-back': string;
+  'product-detail.not-found': string;
+  'product-detail.a11y.product-info': string;
+  'product-detail.a11y.description': string;
+  'shopping-cart.add-product.a11y.subtract-button': string;
+  'shopping-cart.add-product.a11y.add-button': string;
+  'shopping-cart.cart-button.a11y.open-button': string;
+  'shopping-cart.drawer.title': string;
+  'shopping-cart.drawer.empty-cart': string;
+  'shopping-cart.drawer.subtotal': string;
+  'shopping-cart.drawer.total': string;
+  'shopping-cart.drawer.checkout': string;
+  'shopping-cart.drawer.continue-shopping': string;
+  'shopping-cart.drawer.delete-item': string;
+  'shopping-cart.drawer.a11y.close-button': string;
+  'checkout.a11y.title': string;
+  'checkout.navigate-back': string;
+  'checkout.form.title': string;
+  'checkout.form.firstName': string;
+  'checkout.form.lastName': string;
+  'checkout.form.email': string;
+  'checkout.form.phone': string;
+  'checkout.form.submit-button': string;
+  'checkout.order.title': string;
+  'checkout.order.empty-cart': string;
+  'checkout.order.subtotal': string;
+  'checkout.order.total': string;
+  'checkout.cancel': string;
+}
