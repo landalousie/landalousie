@@ -9,4 +9,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Sync products
-        run: curl -X POST https://landalousie-6b7w.vercel.app/products
+        run: curl -X POST ${{secrets.SYNC_PRODUCTS_URL}}
