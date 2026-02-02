@@ -9,4 +9,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Sync products
-        run: curl -X POST ${{secrets.SYNC_PRODUCTS_URL}}
+        run: curl -X POST ${{secrets.SYNC_PRODUCTS_URL}} --http1.1
