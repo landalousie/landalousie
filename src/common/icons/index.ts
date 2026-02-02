@@ -5,3 +5,4 @@ export * from './moon.icon';
 export * from './shopping-cart.icon';
 export * from './subtract.icon';
 export * from './sun.icon';
+export * from './warning.icon';

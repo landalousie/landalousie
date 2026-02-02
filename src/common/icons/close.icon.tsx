@@ -1,10 +1,13 @@
+import cx from 'clsx';
+
 type Props = React.SVGProps<SVGSVGElement>;
 
 export const CloseIcon: React.FC<Props> = (props) => {
+  const { className, ...rest } = props;
   return (
     <svg
-      {...props}
-      className="h-6 w-6"
+      {...rest}
+      className={cx('h-6 w-6', className)}
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth="1.5"

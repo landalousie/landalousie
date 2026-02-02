@@ -1,10 +1,16 @@
+import cx from 'clsx';
+
 type Props = React.SVGProps<SVGSVGElement>;
 
 export const MoonIcon: React.FC<Props> = (props) => {
+  const { className, ...rest } = props;
   return (
     <svg
-      {...props}
-      className="absolute h-full w-full scale-100 rotate-0 opacity-100 transition-all duration-500 dark:scale-0 dark:-rotate-90 dark:opacity-0"
+      {...rest}
+      className={cx(
+        'absolute h-full w-full scale-100 rotate-0 opacity-100 transition-all duration-500 dark:scale-0 dark:-rotate-90 dark:opacity-0',
+        className
+      )}
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

@@ -10,7 +10,7 @@ export type UseValidationsReturnType<
   Data = any,
   FieldName extends keyof Data & string = keyof Data & string,
 > = {
-  isValid: (fieldName: FieldName) => boolean;
+  isValid: (fieldName?: FieldName) => boolean;
   isPending: (fieldName?: FieldName) => boolean;
   validate: (data: any, fieldName?: FieldName) => Promise<boolean>;
   getMessage: (fieldName: FieldName) => string | undefined;
@@ -47,8 +47,8 @@ export const useValidations = <
   }, [suite]);
 
   return {
-    isValid: (fieldName: FieldName) =>
-      !validations.isTested(fieldName) ||
+    isValid: (fieldName?: FieldName) =>
+      (Boolean(fieldName) && !validations.isTested(fieldName as FieldName)) ||
       validations.isPending(fieldName) ||
       validations.isValid(fieldName),
     isPending: validations.isPending,

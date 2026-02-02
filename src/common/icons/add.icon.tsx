@@ -1,10 +1,13 @@
+import cx from 'clsx';
+
 type Props = React.SVGProps<SVGSVGElement>;
 
 export const AddIcon: React.FC<Props> = (props) => {
+  const { className, ...rest } = props;
   return (
     <svg
-      {...props}
-      className="h-4 w-4"
+      {...rest}
+      className={cx('h-4 w-4', className)}
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"

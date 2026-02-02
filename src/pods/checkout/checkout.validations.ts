@@ -1,25 +1,38 @@
+import { Translations } from '#pods/translations/api';
 import { create, enforce, only, test } from 'vest';
 import 'vest/enforce/email';
 import type * as model from './checkout.model';
 
-export const suite = create<keyof model.User>(
-  (client: model.User, field: keyof model.User) => {
+export const suite = (translations: Translations) =>
+  create<keyof model.User>((client: model.User, field: keyof model.User) => {
     only(field);
 
-    test('name', 'Name is required', () => {
+    test('firstName', translations['validations.firstName.required'], () => {
       enforce(client.firstName).isNotEmpty();
     });
-    test('surname', 'Surname is required', () => {
+    test('lastName', translations['validations.lastName.required'], () => {
       enforce(client.lastName).isNotEmpty();
     });
-    test('email', 'Email is required', () => {
+    test('email', translations['validations.email.required'], () => {
       enforce(client.email).isNotEmpty();
     });
-    test('email', 'Email is not valid', () => {
+    test('email', translations['validations.email.format'], () => {
       enforce(client.email).isEmail();
     });
-    test('phone', 'Phone is required', () => {
+    test(
+      'phonePrefix',
+      translations['validations.phonePrefix.required'],
+      () => {
+        enforce(client.phonePrefix).isNotEmpty();
+      }
+    );
+    test('phonePrefix', translations['validations.phonePrefix.format'], () => {
+      enforce(client.phonePrefix).matches(/^\+\d+$/);
+    });
+    test('phone', translations['validations.phone.required'], () => {
       enforce(client.phone).isNotEmpty();
     });
-  }
-);
+    test('phone', translations['validations.phone.format'], () => {
+      enforce(client.phone).matches(/^[0-9\s\-]{6,}$/);
+    });
+  });

@@ -30,10 +30,19 @@ export interface Translations {
   'checkout.form.lastName': string;
   'checkout.form.email': string;
   'checkout.form.phone': string;
+  'checkout.form.customPhonePrefix': string;
   'checkout.form.submit-button': string;
   'checkout.order.title': string;
   'checkout.order.empty-cart': string;
   'checkout.order.subtotal': string;
   'checkout.order.total': string;
   'checkout.cancel': string;
+  'validations.firstName.required': string;
+  'validations.lastName.required': string;
+  'validations.email.required': string;
+  'validations.email.format': string;
+  'validations.phonePrefix.required': string;
+  'validations.phonePrefix.format': string;
+  'validations.phone.required': string;
+  'validations.phone.format': string;
 }

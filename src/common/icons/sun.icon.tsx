@@ -1,10 +1,16 @@
+import cx from 'clsx';
+
 type Props = React.SVGProps<SVGSVGElement>;
 
 export const SunIcon: React.FC<Props> = (props) => {
+  const { className, ...rest } = props;
   return (
     <svg
-      {...props}
-      className="absolute h-full w-full scale-0 rotate-90 text-white opacity-0 transition-all duration-500 dark:scale-100 dark:rotate-0 dark:opacity-100"
+      {...rest}
+      className={cx(
+        'absolute h-full w-full scale-0 rotate-90 text-white opacity-0 transition-all duration-500 dark:scale-100 dark:rotate-0 dark:opacity-100',
+        className
+      )}
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

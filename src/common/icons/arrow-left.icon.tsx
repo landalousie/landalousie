@@ -1,10 +1,13 @@
+import cx from 'clsx';
+
 type Props = React.SVGProps<SVGSVGElement>;
 
 export const ArrowLeftIcon: React.FC<Props> = (props) => {
+  const { className, ...rest } = props;
   return (
     <svg
-      {...props}
-      className="mr-2 h-4 w-4"
+      {...rest}
+      className={cx('mr-2 h-4 w-4', className)}
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth="2"
