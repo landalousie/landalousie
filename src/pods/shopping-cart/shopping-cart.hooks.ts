@@ -69,12 +69,17 @@ export const useShoppingCart = () => {
     }
   };
 
+  const clear = () => {
+    persistedProductListStore.set([]);
+  };
+
   return {
     shoppingCart: mapToShoppingCart(products, productConfig),
     persistedProducts: persistedProductList,
     add,
     subtract,
     remove,
+    clear,
     isOpen: useStore(isOpenDrawer),
     toggleOpen,
   };

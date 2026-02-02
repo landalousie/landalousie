@@ -1,5 +1,6 @@
 export * from './add.icon';
 export * from './arrow-left.icon';
+export * from './check-circle.icon';
 export * from './close.icon';
 export * from './moon.icon';
 export * from './shopping-cart.icon';

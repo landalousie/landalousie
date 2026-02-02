@@ -45,4 +45,8 @@ export interface Translations {
   'validations.phonePrefix.format': string;
   'validations.phone.required': string;
   'validations.phone.format': string;
+  'order-confirmed.title': string;
+  'order-confirmed.subtitle': string;
+  'order-confirmed.pickup.title': string;
+  'order-confirmed.continue.button': string;
 }
