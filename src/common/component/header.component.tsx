@@ -10,7 +10,7 @@ export const Header: React.FC = () => {
   const { theme, toggle } = useTheme();
   return (
     <header className="bg-secondary-100 dark:bg-secondary-900 text-tbase-500/90 sticky top-0 z-50 flex w-full items-center justify-between px-4 py-4 shadow-sm backdrop-blur-md md:px-6">
-      <div className="font-instrument text-center text-xl font-bold text-nowrap">
+      <div className="font-instrument text-center text-lg md:text-xl font-bold text-nowrap">
         <Link
           to="/"
           className="hover:text-primary-500 dark:hover:text-primary-300 transition-colors"
@@ -24,10 +24,13 @@ export const Header: React.FC = () => {
         </Link>
       </div>
 
-      <nav className="flex items-center gap-8" aria-label="Main navigation">
+      <nav
+        className="flex items-center gap-3 md:gap-8"
+        aria-label="Main navigation"
+      >
         <Link
           to="/about"
-          className="font-geist hover:text-primary-500 dark:hover:text-primary-300 font-semibold transition-colors"
+          className="font-geist hover:text-primary-500 dark:hover:text-primary-300 font-semibold transition-colors text-sm md:text-base"
         >
           {translations['header.about.link']}
         </Link>

@@ -17,7 +17,7 @@ export const ProductItem: React.FC<Props> = (props) => {
   const { data: translations } = useSuspenseQuery(translationsQueryOptions());
   return (
     <li className="flex py-6">
-      <div className="h-24 w-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
+      <div className="h-20 w-20 md:h-24 md:w-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
         <img
           src={product.image.url}
           alt={product.name}
@@ -25,7 +25,7 @@ export const ProductItem: React.FC<Props> = (props) => {
         />
       </div>
 
-      <div className="ml-4 flex flex-1 flex-col gap-1">
+      <div className="ml-3 md:ml-4 flex flex-1 flex-col gap-1">
         <div>
           <div className="flex justify-between text-base font-medium text-gray-900 dark:text-gray-100">
             <h3>
@@ -47,8 +47,8 @@ export const ProductItem: React.FC<Props> = (props) => {
             {product.priceLabel} {product.priceUnit}
           </p>
         </div>
-        <div className="flex flex-1 items-center justify-between gap-4 text-sm">
-          <AddProduct className="flex-1" productId={String(product.id)} />
+        <div className="flex flex-1 items-center justify-between gap-2 text-sm">
+          <AddProduct className="w-28" productId={String(product.id)} />
 
           <div className="flex">
             <button

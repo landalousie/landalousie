@@ -1,4 +1,4 @@
-import { Hero } from '#common/component/hero.component.tsx';
+import { Hero } from '#common/component';
 import { pageQueryOptions } from '#pods/page/page.query.ts';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';

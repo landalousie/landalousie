@@ -1,4 +1,4 @@
-import { Hero } from '#common/component/hero.component.tsx';
+import { Hero } from '#common/component';
 import { ShopLayout } from '#layouts';
 import { pageQueryOptions } from '#pods/page';
 import { Products } from '#pods/products';

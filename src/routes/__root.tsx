@@ -1,5 +1,4 @@
-import { Footer } from '#common/component/footer';
-import { Header } from '#common/component/header';
+import { Footer, Header } from '#common/component';
 import { getThemeScript } from '#core/theme';
 import { CallToAction, callToActionQueryOptions } from '#pods/call-to-action';
 import { pageQueryOptions } from '#pods/page';
