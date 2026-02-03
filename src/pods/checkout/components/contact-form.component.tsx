@@ -167,7 +167,7 @@ export const ContactForm = () => {
       <div className="mt-6">
         <button
           type="submit"
-          className="w-full bg-secondary-900 text-white dark:bg-secondary-100 dark:text-secondary-950 font-bold py-4 px-6 rounded-full hover:opacity-90 active:scale-95 active:shadow-inner transition-all duration-150"
+          className="w-full bg-secondary-900 text-white dark:bg-secondary-100 dark:text-secondary-950 font-bold py-4 px-6 rounded-full hover:opacity-90 active:scale-95 active:shadow-inner transition-all duration-150 cursor-pointer"
         >
           {translations['checkout.form.submit-button']}{' '}
           {shoppingCart.totalLabel}
