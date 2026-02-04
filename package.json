@@ -35,14 +35,13 @@
     "marked": "^17.0.1",
     "nanostores": "^1.1.0",
     "nitro": "npm:nitro-nightly@latest",
+    "pino": "^10.3.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "rollbar": "^2.26.5",
     "stripe": "^20.3.0",
     "tailwindcss": "^4.1.18",
     "vest": "^5.4.6",
-    "winston": "^3.19.0",
-    "winston-transport": "^4.9.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {

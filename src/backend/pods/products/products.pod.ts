@@ -58,7 +58,9 @@ export const syncProducts = createServerFn({ method: 'POST' }).handler(
 
       logger.info('Products synchronized successfully with Stripe');
     } catch (error) {
-      logger.error('Error syncing products with Stripe:', error);
+      logger.error(
+        `Error syncing products with Stripe: ${JSON.stringify(error, null, 2)}`
+      );
       throw error;
     }
   }
@@ -118,10 +120,12 @@ export const checkout = createServerFn({ method: 'POST' })
         throw new Error('Failed to create checkout session URL.');
       }
       // TODO: Enviar email de info
-      logger.info('Checkout session created:', session.id);
+      logger.info(`Checkout session created: ${session.id}`);
       return { url: session.url };
     } catch (error) {
-      logger.error('Error creating checkout session:', error);
+      logger.error(
+        `Error creating checkout session: ${JSON.stringify(error, null, 2)}`
+      );
       throw error;
     }
   });
@@ -141,11 +145,13 @@ export const getOrderConfirmation = createServerFn({ method: 'GET' })
       if (session.payment_status !== 'paid') {
         throw new Error('The payment for this session is not completed.');
       }
-      logger.info('Order confirmed for session:', sessionId);
+      logger.info(`Order confirmed for session: ${sessionId}`);
 
       return;
     } catch (error) {
-      logger.error('Error fetching order confirmation:', error);
+      logger.error(
+        `Error fetching order confirmation:: ${JSON.stringify(error, null, 2)}`
+      );
       throw error;
     }
   });
