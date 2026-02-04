@@ -8,104 +8,115 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as OrderConfirmationRouteImport } from './routes/order-confirmation'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as CheckoutRouteRouteImport } from './routes/checkout/route'
-import { Route as ShopRouteRouteImport } from './routes/_shop/route'
-import { Route as ShopIndexRouteImport } from './routes/_shop/index'
-import { Route as CheckoutCancelRouteImport } from './routes/checkout/cancel'
-import { Route as ShopProductsIndexRouteImport } from './routes/_shop/products/index'
-import { Route as ShopProductsSlugRouteImport } from './routes/_shop/products/$slug'
+import { Route as rootRouteImport } from './routes/__root';
+import { Route as OrderConfirmationRouteImport } from './routes/order-confirmation';
+import { Route as AboutRouteImport } from './routes/about';
+import { Route as CheckoutRouteRouteImport } from './routes/checkout/route';
+import { Route as ShopRouteRouteImport } from './routes/_shop/route';
+import { Route as ShopIndexRouteImport } from './routes/_shop/index';
+import { Route as CheckoutSubscriptionsRouteImport } from './routes/checkout/subscriptions';
+import { Route as CheckoutCancelRouteImport } from './routes/checkout/cancel';
+import { Route as ShopProductsIndexRouteImport } from './routes/_shop/products/index';
+import { Route as ShopProductsSlugRouteImport } from './routes/_shop/products/$slug';
 
 const OrderConfirmationRoute = OrderConfirmationRouteImport.update({
   id: '/order-confirmation',
   path: '/order-confirmation',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const CheckoutRouteRoute = CheckoutRouteRouteImport.update({
   id: '/checkout',
   path: '/checkout',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const ShopRouteRoute = ShopRouteRouteImport.update({
   id: '/_shop',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const ShopIndexRoute = ShopIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => ShopRouteRoute,
-} as any)
+} as any);
+const CheckoutSubscriptionsRoute = CheckoutSubscriptionsRouteImport.update({
+  id: '/subscriptions',
+  path: '/subscriptions',
+  getParentRoute: () => CheckoutRouteRoute,
+} as any);
 const CheckoutCancelRoute = CheckoutCancelRouteImport.update({
   id: '/cancel',
   path: '/cancel',
   getParentRoute: () => CheckoutRouteRoute,
-} as any)
+} as any);
 const ShopProductsIndexRoute = ShopProductsIndexRouteImport.update({
   id: '/products/',
   path: '/products/',
   getParentRoute: () => ShopRouteRoute,
-} as any)
+} as any);
 const ShopProductsSlugRoute = ShopProductsSlugRouteImport.update({
   id: '/products/$slug',
   path: '/products/$slug',
   getParentRoute: () => ShopRouteRoute,
-} as any)
+} as any);
 
 export interface FileRoutesByFullPath {
-  '/': typeof ShopIndexRoute
-  '/checkout': typeof CheckoutRouteRouteWithChildren
-  '/about': typeof AboutRoute
-  '/order-confirmation': typeof OrderConfirmationRoute
-  '/checkout/cancel': typeof CheckoutCancelRoute
-  '/products/$slug': typeof ShopProductsSlugRoute
-  '/products/': typeof ShopProductsIndexRoute
+  '/': typeof ShopIndexRoute;
+  '/checkout': typeof CheckoutRouteRouteWithChildren;
+  '/about': typeof AboutRoute;
+  '/order-confirmation': typeof OrderConfirmationRoute;
+  '/checkout/cancel': typeof CheckoutCancelRoute;
+  '/checkout/subscriptions': typeof CheckoutSubscriptionsRoute;
+  '/products/$slug': typeof ShopProductsSlugRoute;
+  '/products/': typeof ShopProductsIndexRoute;
 }
 export interface FileRoutesByTo {
-  '/checkout': typeof CheckoutRouteRouteWithChildren
-  '/about': typeof AboutRoute
-  '/order-confirmation': typeof OrderConfirmationRoute
-  '/checkout/cancel': typeof CheckoutCancelRoute
-  '/': typeof ShopIndexRoute
-  '/products/$slug': typeof ShopProductsSlugRoute
-  '/products': typeof ShopProductsIndexRoute
+  '/checkout': typeof CheckoutRouteRouteWithChildren;
+  '/about': typeof AboutRoute;
+  '/order-confirmation': typeof OrderConfirmationRoute;
+  '/checkout/cancel': typeof CheckoutCancelRoute;
+  '/checkout/subscriptions': typeof CheckoutSubscriptionsRoute;
+  '/': typeof ShopIndexRoute;
+  '/products/$slug': typeof ShopProductsSlugRoute;
+  '/products': typeof ShopProductsIndexRoute;
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  '/_shop': typeof ShopRouteRouteWithChildren
-  '/checkout': typeof CheckoutRouteRouteWithChildren
-  '/about': typeof AboutRoute
-  '/order-confirmation': typeof OrderConfirmationRoute
-  '/checkout/cancel': typeof CheckoutCancelRoute
-  '/_shop/': typeof ShopIndexRoute
-  '/_shop/products/$slug': typeof ShopProductsSlugRoute
-  '/_shop/products/': typeof ShopProductsIndexRoute
+  __root__: typeof rootRouteImport;
+  '/_shop': typeof ShopRouteRouteWithChildren;
+  '/checkout': typeof CheckoutRouteRouteWithChildren;
+  '/about': typeof AboutRoute;
+  '/order-confirmation': typeof OrderConfirmationRoute;
+  '/checkout/cancel': typeof CheckoutCancelRoute;
+  '/checkout/subscriptions': typeof CheckoutSubscriptionsRoute;
+  '/_shop/': typeof ShopIndexRoute;
+  '/_shop/products/$slug': typeof ShopProductsSlugRoute;
+  '/_shop/products/': typeof ShopProductsIndexRoute;
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
+  fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
     | '/'
     | '/checkout'
     | '/about'
     | '/order-confirmation'
     | '/checkout/cancel'
+    | '/checkout/subscriptions'
     | '/products/$slug'
-    | '/products/'
-  fileRoutesByTo: FileRoutesByTo
+    | '/products/';
+  fileRoutesByTo: FileRoutesByTo;
   to:
     | '/checkout'
     | '/about'
     | '/order-confirmation'
     | '/checkout/cancel'
+    | '/checkout/subscriptions'
     | '/'
     | '/products/$slug'
-    | '/products'
+    | '/products';
   id:
     | '__root__'
     | '/_shop'
@@ -113,122 +124,132 @@ export interface FileRouteTypes {
     | '/about'
     | '/order-confirmation'
     | '/checkout/cancel'
+    | '/checkout/subscriptions'
     | '/_shop/'
     | '/_shop/products/$slug'
-    | '/_shop/products/'
-  fileRoutesById: FileRoutesById
+    | '/_shop/products/';
+  fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  ShopRouteRoute: typeof ShopRouteRouteWithChildren
-  CheckoutRouteRoute: typeof CheckoutRouteRouteWithChildren
-  AboutRoute: typeof AboutRoute
-  OrderConfirmationRoute: typeof OrderConfirmationRoute
+  ShopRouteRoute: typeof ShopRouteRouteWithChildren;
+  CheckoutRouteRoute: typeof CheckoutRouteRouteWithChildren;
+  AboutRoute: typeof AboutRoute;
+  OrderConfirmationRoute: typeof OrderConfirmationRoute;
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
     '/order-confirmation': {
-      id: '/order-confirmation'
-      path: '/order-confirmation'
-      fullPath: '/order-confirmation'
-      preLoaderRoute: typeof OrderConfirmationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/order-confirmation';
+      path: '/order-confirmation';
+      fullPath: '/order-confirmation';
+      preLoaderRoute: typeof OrderConfirmationRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/about';
+      path: '/about';
+      fullPath: '/about';
+      preLoaderRoute: typeof AboutRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/checkout': {
-      id: '/checkout'
-      path: '/checkout'
-      fullPath: '/checkout'
-      preLoaderRoute: typeof CheckoutRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/checkout';
+      path: '/checkout';
+      fullPath: '/checkout';
+      preLoaderRoute: typeof CheckoutRouteRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/_shop': {
-      id: '/_shop'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof ShopRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/_shop';
+      path: '';
+      fullPath: '/';
+      preLoaderRoute: typeof ShopRouteRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/_shop/': {
-      id: '/_shop/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof ShopIndexRouteImport
-      parentRoute: typeof ShopRouteRoute
-    }
+      id: '/_shop/';
+      path: '/';
+      fullPath: '/';
+      preLoaderRoute: typeof ShopIndexRouteImport;
+      parentRoute: typeof ShopRouteRoute;
+    };
+    '/checkout/subscriptions': {
+      id: '/checkout/subscriptions';
+      path: '/subscriptions';
+      fullPath: '/checkout/subscriptions';
+      preLoaderRoute: typeof CheckoutSubscriptionsRouteImport;
+      parentRoute: typeof CheckoutRouteRoute;
+    };
     '/checkout/cancel': {
-      id: '/checkout/cancel'
-      path: '/cancel'
-      fullPath: '/checkout/cancel'
-      preLoaderRoute: typeof CheckoutCancelRouteImport
-      parentRoute: typeof CheckoutRouteRoute
-    }
+      id: '/checkout/cancel';
+      path: '/cancel';
+      fullPath: '/checkout/cancel';
+      preLoaderRoute: typeof CheckoutCancelRouteImport;
+      parentRoute: typeof CheckoutRouteRoute;
+    };
     '/_shop/products/': {
-      id: '/_shop/products/'
-      path: '/products'
-      fullPath: '/products/'
-      preLoaderRoute: typeof ShopProductsIndexRouteImport
-      parentRoute: typeof ShopRouteRoute
-    }
+      id: '/_shop/products/';
+      path: '/products';
+      fullPath: '/products/';
+      preLoaderRoute: typeof ShopProductsIndexRouteImport;
+      parentRoute: typeof ShopRouteRoute;
+    };
     '/_shop/products/$slug': {
-      id: '/_shop/products/$slug'
-      path: '/products/$slug'
-      fullPath: '/products/$slug'
-      preLoaderRoute: typeof ShopProductsSlugRouteImport
-      parentRoute: typeof ShopRouteRoute
-    }
+      id: '/_shop/products/$slug';
+      path: '/products/$slug';
+      fullPath: '/products/$slug';
+      preLoaderRoute: typeof ShopProductsSlugRouteImport;
+      parentRoute: typeof ShopRouteRoute;
+    };
   }
 }
 
 interface ShopRouteRouteChildren {
-  ShopIndexRoute: typeof ShopIndexRoute
-  ShopProductsSlugRoute: typeof ShopProductsSlugRoute
-  ShopProductsIndexRoute: typeof ShopProductsIndexRoute
+  ShopIndexRoute: typeof ShopIndexRoute;
+  ShopProductsSlugRoute: typeof ShopProductsSlugRoute;
+  ShopProductsIndexRoute: typeof ShopProductsIndexRoute;
 }
 
 const ShopRouteRouteChildren: ShopRouteRouteChildren = {
   ShopIndexRoute: ShopIndexRoute,
   ShopProductsSlugRoute: ShopProductsSlugRoute,
   ShopProductsIndexRoute: ShopProductsIndexRoute,
-}
+};
 
 const ShopRouteRouteWithChildren = ShopRouteRoute._addFileChildren(
-  ShopRouteRouteChildren,
-)
+  ShopRouteRouteChildren
+);
 
 interface CheckoutRouteRouteChildren {
-  CheckoutCancelRoute: typeof CheckoutCancelRoute
+  CheckoutCancelRoute: typeof CheckoutCancelRoute;
+  CheckoutSubscriptionsRoute: typeof CheckoutSubscriptionsRoute;
 }
 
 const CheckoutRouteRouteChildren: CheckoutRouteRouteChildren = {
   CheckoutCancelRoute: CheckoutCancelRoute,
-}
+  CheckoutSubscriptionsRoute: CheckoutSubscriptionsRoute,
+};
 
 const CheckoutRouteRouteWithChildren = CheckoutRouteRoute._addFileChildren(
-  CheckoutRouteRouteChildren,
-)
+  CheckoutRouteRouteChildren
+);
 
 const rootRouteChildren: RootRouteChildren = {
   ShopRouteRoute: ShopRouteRouteWithChildren,
   CheckoutRouteRoute: CheckoutRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   OrderConfirmationRoute: OrderConfirmationRoute,
-}
+};
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();
 
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
+import type { getRouter } from './router.tsx';
+import type { createStart } from '@tanstack/react-start';
 declare module '@tanstack/react-start' {
   interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
+    ssr: true;
+    router: Awaited<ReturnType<typeof getRouter>>;
   }
 }

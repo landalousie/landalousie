@@ -9,4 +9,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Sync products
-        run: curl -X POST ${{secrets.SYNC_PRODUCTS_URL}}
+        run: |
+          curl -X POST -H "Authorization: Bearer ${{secrets.CONTENT_ISLAND_ACCESS_TOKEN}}" ${{secrets.SYNC_PRODUCTS_URL}}

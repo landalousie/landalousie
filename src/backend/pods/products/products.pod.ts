@@ -1,7 +1,9 @@
 import { stripe } from '#core/clients';
 import { ENV } from '#core/constants';
 import { logger } from '#core/logger';
+import { FileRoutesByPath } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/react-start';
+
 import Stripe from 'stripe';
 import { z } from 'zod';
 import { fetchProducts } from './api';
@@ -53,6 +55,8 @@ export const syncProducts = createServerFn({ method: 'POST' }).handler(
           }
         }
       }
+
+      logger.info('Products synchronized successfully with Stripe');
     } catch (error) {
       logger.error('Error syncing products with Stripe:', error);
       throw error;
@@ -69,10 +73,11 @@ const checkoutSchema = z.object({
   ),
   user: z.object({
     name: z.string().min(1),
-    email: z.string().email(),
+    email: z.email(),
     phone: z.string().min(1),
   }),
 });
+
 export const checkout = createServerFn({ method: 'POST' })
   .inputValidator((data: model.Checkout) => checkoutSchema.parse(data))
   .handler(async ({ data: checkout }) => {
@@ -84,7 +89,7 @@ export const checkout = createServerFn({ method: 'POST' })
 
           if (!product.default_price) {
             throw new Error(
-              `El producto ${product.name} no tiene precio configurado.`
+              `The product "${product.name}" does not have a price set.`
             );
           }
 
@@ -95,11 +100,13 @@ export const checkout = createServerFn({ method: 'POST' })
         })
       );
 
+      const successRoute: keyof FileRoutesByPath = '/order-confirmation';
+      const cancelRoute: keyof FileRoutesByPath = '/checkout/cancel';
       const session = await stripe.checkout.sessions.create({
         line_items,
         mode: 'payment',
-        success_url: `${origin}/order-confirmation?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${origin}/checkout/cancel`,
+        success_url: `${origin}${successRoute}?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${origin}${cancelRoute}`,
         customer_email: checkout.user.email,
         metadata: {
           customer_name: checkout.user.name,
@@ -108,9 +115,10 @@ export const checkout = createServerFn({ method: 'POST' })
       });
 
       if (!session.url) {
-        throw new Error('No se pudo crear la sesión de pago');
+        throw new Error('Failed to create checkout session URL.');
       }
-
+      // TODO: Enviar email de info
+      logger.info('Checkout session created:', session.id);
       return { url: session.url };
     } catch (error) {
       logger.error('Error creating checkout session:', error);
@@ -133,6 +141,7 @@ export const getOrderConfirmation = createServerFn({ method: 'GET' })
       if (session.payment_status !== 'paid') {
         throw new Error('The payment for this session is not completed.');
       }
+      logger.info('Order confirmed for session:', sessionId);
 
       return;
     } catch (error) {
