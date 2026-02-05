@@ -29,7 +29,7 @@ export const ProductItem: React.FC<Props> = (props) => {
 
         <div className="ml-4 flex flex-1 flex-col justify-between">
           <div className="flex justify-between items-start">
-            <h3 className="line-clamp-2 pr-4 text-base font-medium text-gray-900 dark:text-gray-100">
+            <h3 className="line-clamp-2 pr-4 text-base md:text-sm font-medium text-gray-900 dark:text-gray-100">
               <Link
                 className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                 to="/products/$slug"
