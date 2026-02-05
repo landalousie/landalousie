@@ -17,7 +17,7 @@ function Component() {
         className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900"
       >
         <ArrowLeftIcon />
-        {translations['checkout.navigate-back']}
+        {translations['checkout.navigateBack']}
       </Link>
       <Outlet />
       <Checkout />

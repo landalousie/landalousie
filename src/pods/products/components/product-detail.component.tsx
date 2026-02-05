@@ -32,7 +32,7 @@ export const ProductDetail = () => {
   if (!product) {
     return (
       <div className="flex h-[50vh] items-center justify-center text-gray-500">
-        {translations['product-detail.not-found']}
+        {translations['productDetail.notFound']}
       </div>
     );
   }
@@ -72,7 +72,7 @@ export const ProductDetail = () => {
 
               <div className="mt-3">
                 <h3 className="sr-only">
-                  {translations['product-detail.a11y.product-info']}
+                  {translations['productDetail.a11y.productInfo']}
                 </h3>
                 <div className="flex items-baseline gap-2">
                   <p className="text-primary-600 dark:text-primary-400 text-3xl font-extrabold tracking-tight">
@@ -90,7 +90,7 @@ export const ProductDetail = () => {
 
               <div className="mt-6">
                 <h4 className="sr-only">
-                  {translations['product-detail.a11y.description']}
+                  {translations['productDetail.a11y.description']}
                 </h4>
                 <div className="space-y-6 text-base text-gray-700 dark:text-gray-300">
                   <div

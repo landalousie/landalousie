@@ -58,7 +58,7 @@ export const CartDrawer = () => {
                         className="text-lg font-medium text-gray-900 dark:text-gray-100"
                         id="slide-over-title"
                       >
-                        {translations['shopping-cart.drawer.title']}
+                        {translations['shoppingCart.drawer.title']}
                       </h2>
                       <div className="ml-3 flex h-7 items-center">
                         <button
@@ -70,7 +70,7 @@ export const CartDrawer = () => {
                           <span className="sr-only">
                             {
                               translations[
-                                'shopping-cart.drawer.a11y.close-button'
+                                'shoppingCart.drawer.a11y.closeButton'
                               ]
                             }
                           </span>
@@ -87,7 +87,7 @@ export const CartDrawer = () => {
                         >
                           {shoppingCart.products.length === 0 ? (
                             <li className="py-6 text-center text-gray-500 dark:text-gray-400">
-                              {translations['shopping-cart.drawer.empty-cart']}
+                              {translations['shoppingCart.drawer.emptyCart']}
                             </li>
                           ) : (
                             shoppingCart.products.map((product) => (
@@ -101,12 +101,12 @@ export const CartDrawer = () => {
 
                   <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                     <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400">
-                      <p>{translations['shopping-cart.drawer.subtotal']}</p>
+                      <p>{translations['shoppingCart.drawer.subtotal']}</p>
                       <p>{shoppingCart.totalLabel}</p>
                     </div>
                     <div className="flex justify-between text-base font-medium text-gray-900 dark:text-gray-100">
                       <p>
-                        {translations['shopping-cart.drawer.total']}{' '}
+                        {translations['shoppingCart.drawer.total']}{' '}
                         {shoppingCart.taxesLabel}
                       </p>
                       <p>{shoppingCart.totalLabel}</p>
@@ -117,7 +117,7 @@ export const CartDrawer = () => {
                         className="bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-400 flex items-center justify-center rounded-md border border-transparent px-6 py-3 text-base font-medium text-white shadow-sm"
                         onClick={() => toggleOpen()}
                       >
-                        {translations['shopping-cart.drawer.checkout']}
+                        {translations['shoppingCart.drawer.checkout']}
                       </Link>
                     </div>
                     <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
@@ -127,11 +127,7 @@ export const CartDrawer = () => {
                           className="text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300 cursor-pointer font-medium"
                           onClick={() => toggleOpen()}
                         >
-                          {
-                            translations[
-                              'shopping-cart.drawer.continue-shopping'
-                            ]
-                          }
+                          {translations['shoppingCart.drawer.continueShopping']}
                           <span aria-hidden="true"> &rarr;</span>
                         </button>
                       </p>

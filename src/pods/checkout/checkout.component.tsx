@@ -36,7 +36,7 @@ export const Checkout = () => {
         <div className="flex flex-col gap-6">
           {shoppingCart.products.length === 0 ? (
             <p className="text-tbase-500/60">
-              {translations['checkout.order.empty-cart']}
+              {translations['checkout.order.emptyCart']}
             </p>
           ) : (
             <ul className="flex flex-col gap-4">

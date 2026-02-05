@@ -30,17 +30,17 @@ export const OrderConfirmation = () => {
           id="confirmation-heading"
           className="text-3xl md:text-4xl font-bold font-geist text-tbase-500"
         >
-          {translations['order-confirmed.title']}
+          {translations['orderConfirmed.title']}
         </h2>
         <p className="text-tbase-500/80 max-w-md">
-          {translations['order-confirmed.subtitle']}
+          {translations['orderConfirmed.subtitle']}
         </p>
       </div>
 
       <div className="w-full max-w-2xl flex flex-col gap-8">
         <div className="w-full">
           <h3 className="text-xl font-bold mb-4 font-geist text-tbase-500">
-            {translations['order-confirmed.pickup.title']}
+            {translations['orderConfirmed.pickup.title']}
           </h3>
           <NextPickup />
         </div>
@@ -50,7 +50,7 @@ export const OrderConfirmation = () => {
             to="/"
             className="bg-primary-900 text-primary-50 dark:bg-primary-50 dark:text-primary-950 font-bold py-3 px-8 rounded-full hover:opacity-90 transition-opacity"
           >
-            {translations['order-confirmed.continue.button']}
+            {translations['orderConfirmed.continue.button']}
           </Link>
         </div>
       </div>

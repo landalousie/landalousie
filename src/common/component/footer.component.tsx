@@ -9,7 +9,7 @@ export const Footer: React.FC = () => {
     <footer className="bg-secondary-100 dark:bg-secondary-900 flex w-full flex-col gap-2 px-6 py-8">
       <div className="flex w-full flex-col items-center justify-between gap-6 md:flex-row">
         <p className="font-instrument text-lg text-nowrap">
-          {translations['footer.logo-title']}
+          {translations['footer.logoTitle']}
         </p>
         <p className="text-xs text-nowrap">{translations['footer.copy']}</p>
       </div>

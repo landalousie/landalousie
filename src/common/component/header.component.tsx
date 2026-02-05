@@ -16,9 +16,9 @@ export const Header: React.FC = () => {
           className="hover:text-primary-500 dark:hover:text-primary-300 transition-colors"
         >
           <h1>
-            <span>{translations['header.logo-title']}</span>
+            <span>{translations['header.logoTitle']}</span>
             <span className="sr-only">
-              {translations['header.a11y.title-link-label']}
+              {translations['header.a11y.titleLinkLabel']}
             </span>
           </h1>
         </Link>
@@ -40,7 +40,7 @@ export const Header: React.FC = () => {
           onClick={() => toggle()}
         >
           <span className="sr-only">
-            {translations['header.a11y.theme-button']}
+            {translations['header.a11y.themeButton']}
           </span>
           <div className="relative h-6 w-6 overflow-hidden">
             {theme === 'dark' ? <SunIcon /> : <MoonIcon />}

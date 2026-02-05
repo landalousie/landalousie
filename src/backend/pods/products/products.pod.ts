@@ -3,7 +3,6 @@ import { ENV } from '#core/constants';
 import { logger } from '#core/logger';
 import { FileRoutesByPath } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/react-start';
-
 import Stripe from 'stripe';
 import { z } from 'zod';
 import { fetchProducts } from './api';

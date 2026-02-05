@@ -3,7 +3,7 @@ import { ENV, STRIPE_SIGNATURE_HEADER } from '#core/constants';
 import { logger } from '#core/logger';
 import { createFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/checkout/subscriptions')({
+export const Route = createFileRoute('/checkout/events')({
   server: {
     handlers: {
       POST: async ({ request }) => {

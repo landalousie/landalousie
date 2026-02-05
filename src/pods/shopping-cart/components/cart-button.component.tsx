@@ -13,7 +13,7 @@ export const CartButton = () => {
   return (
     <button
       className="bg-secondary-600 focus:ring-secondary-600 dark:bg-secondary-500 dark:hover:bg-secondary-400 fixed top-24 right-4 z-40 flex cursor-pointer items-center justify-center rounded-full p-3 text-white shadow-lg transition-transform hover:scale-110 focus:ring-2 focus:ring-offset-2 focus:outline-none"
-      aria-label={translations['shopping-cart.cart-button.a11y.open-button']}
+      aria-label={translations['shoppingCart.cartButton.a11y.openButton']}
       onClick={() => toggleOpen()}
     >
       <ShoppingCartIcon />
