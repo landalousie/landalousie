@@ -113,9 +113,17 @@ export const CartDrawer = () => {
                     </div>
                     <div className="mt-6">
                       <Link
+                        disabled={shoppingCart.total === 0}
                         to="/checkout"
-                        className="bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-400 flex items-center justify-center rounded-md border border-transparent px-6 py-3 text-base font-medium text-white shadow-sm"
-                        onClick={() => toggleOpen()}
+                        className="bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-400 flex items-center justify-center rounded-md border border-transparent px-6 py-3 text-base font-medium text-white shadow-sm
+                        aria-disabled:cursor-not-allowed aria-disabled:opacity-50
+                        transition-colors duration-150"
+                        onClick={() => {
+                          if (shoppingCart.total === 0) {
+                            return;
+                          }
+                          toggleOpen();
+                        }}
                       >
                         {translations['shoppingCart.drawer.checkout']}
                       </Link>

@@ -1,6 +1,6 @@
 import { CheckCircleIcon } from '#common/icons';
-import { createEmptyUser } from '#pods/checkout/checkout.model.ts';
-import { userStore } from '#pods/checkout/checkout.stores';
+import { createEmptyCustomer } from '#pods/checkout/checkout.model.ts';
+import { customerStore } from '#pods/checkout/checkout.stores';
 import { NextPickup } from '#pods/next-pickup';
 import { useShoppingCart } from '#pods/shopping-cart/shopping-cart.hooks';
 import { translationsQueryOptions } from '#pods/translations/translations.query';
@@ -13,7 +13,7 @@ export const OrderConfirmation = () => {
   const { clear } = useShoppingCart();
 
   React.useEffect(() => {
-    userStore.set(createEmptyUser());
+    customerStore.set(createEmptyCustomer());
     clear();
   }, []);
 

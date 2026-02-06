@@ -31,7 +31,9 @@ export interface WebTranslations {
   'checkout.form.email': string;
   'checkout.form.phone': string;
   'checkout.form.customPhonePrefix': string;
+  'checkout.form.wantInvoice': string;
   'checkout.form.submitButton': string;
+  'checkout.form.submitInProgress': string;
   'checkout.order.title': string;
   'checkout.order.emptyCart': string;
   'checkout.order.subtotal': string;

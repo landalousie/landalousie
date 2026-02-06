@@ -1,15 +1,17 @@
-export interface User {
+export interface Customer {
   firstName: string;
   lastName: string;
   email: string;
   phonePrefix: string;
   phone: string;
+  wantInvoice: boolean;
 }
 
-export const createEmptyUser = (): User => ({
+export const createEmptyCustomer = (): Customer => ({
   firstName: '',
   lastName: '',
   email: '',
   phonePrefix: '+33',
   phone: '',
+  wantInvoice: false,
 });

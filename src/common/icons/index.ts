@@ -5,6 +5,7 @@ export * from './close.icon';
 export * from './moon.icon';
 export * from './shopping-cart.icon';
 export * from './subtract.icon';
+export * from './spinner.icon';
 export * from './sun.icon';
 export * from './trash.icon';
 export * from './warning.icon';

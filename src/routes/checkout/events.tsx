@@ -1,3 +1,4 @@
+import { checkoutSuccess } from '#backend/pods/checkout';
 import { stripe } from '#core/clients';
 import { ENV, STRIPE_SIGNATURE_HEADER } from '#core/constants';
 import { logger } from '#core/logger';
@@ -19,8 +20,7 @@ export const Route = createFileRoute('/checkout/events')({
             case 'checkout.session.completed': {
               const session = event.data.object;
               logger.info(`Pago exitoso para la sesión: ${session.id}`);
-              // TODO: Enviar email de confirmación aquí
-              // const email = session.customer_details?.email;
+              await checkoutSuccess({ data: session });
               break;
             }
             case 'checkout.session.async_payment_failed': {
