@@ -14,6 +14,7 @@ const mapProductFromApiToModel = (
   image: product.image,
   longDescription: product.longDescription,
   shortDescription: product.shortDescription,
+  isOutOfStock: product.isOutOfStock,
   bioTag: product.bioTag,
 });
 
@@ -34,4 +35,5 @@ export const mapProductConfigFromApiToModel = (
   taxesLabel: productConfig.taxesLabel,
   maxUnits: productConfig.maxUnits,
   priceUnit: productConfig.priceUnit,
+  outOfStockTag: productConfig.outOfStockTag,
 });

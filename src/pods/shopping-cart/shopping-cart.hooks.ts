@@ -75,7 +75,6 @@ export const useShoppingCart = () => {
 
   return {
     shoppingCart: mapToShoppingCart(products, productConfig),
-    persistedProducts: persistedProductList,
     add,
     subtract,
     remove,

@@ -14,6 +14,7 @@ export interface Product {
   image: Media;
   longDescription: string;
   shortDescription?: string;
+  isOutOfStock?: boolean;
   bioTag?: BioTag;
 }
 
@@ -22,4 +23,5 @@ export interface ProductConfig {
   currency: string;
   taxesLabel: string;
   priceUnit: string;
+  outOfStockTag: Media;
 }

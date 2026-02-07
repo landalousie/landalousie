@@ -3,6 +3,7 @@ import { AddProduct } from '#pods/shopping-cart/components';
 import { Link } from '@tanstack/react-router';
 import React from 'react';
 import type * as model from '../products.model';
+import { ProductTag } from './product-tag.component';
 
 interface Props {
   product: model.Product;
@@ -26,15 +27,14 @@ export const ProductCard: React.FC<Props> = (props) => {
           className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
           loading="lazy"
         />
-        {product.bioTag?.logo?.url && (
-          <div className="absolute top-3 left-3 z-10 rounded-md bg-white/90 p-1 shadow-sm backdrop-blur-sm transition-transform duration-300 hover:scale-105">
-            <img
-              src={product.bioTag.logo.url}
-              alt={product.bioTag.logo.name}
-              className="h-6 w-auto"
-            />
-          </div>
-        )}
+
+        <ProductTag
+          classes={{
+            root: 'top-3 left-3 p-1',
+            img: 'h-6',
+          }}
+          product={product}
+        />
       </Link>
 
       <div className="flex flex-1 flex-col p-5">
@@ -64,9 +64,11 @@ export const ProductCard: React.FC<Props> = (props) => {
         <p className="mb-5 line-clamp-2 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
           {product.shortDescription}
         </p>
-        <div className="mt-auto">
-          <AddProduct productId={product.id} canRemove />
-        </div>
+        {!product.isOutOfStock && (
+          <div className="mt-auto">
+            <AddProduct productId={product.id} canRemove />
+          </div>
+        )}
       </div>
     </article>
   );

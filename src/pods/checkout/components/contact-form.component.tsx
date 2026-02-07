@@ -14,12 +14,13 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useCheckout } from '../api';
 import { COUNTRY_PHONE_CODES } from '../checkout.constants';
+import { mapToCheckoutProductList } from '../checkout.mappers';
 import type * as model from '../checkout.model';
 import { customerStore } from '../checkout.stores';
 import { suite } from '../checkout.validations';
 
 export const ContactForm = () => {
-  const { shoppingCart, persistedProducts } = useShoppingCart();
+  const { shoppingCart } = useShoppingCart();
   const customer = useStore(customerStore);
   const { data: translations } = useSuspenseQuery(translationsQueryOptions());
   const validations = useValidations<model.Customer>(suite(translations));
@@ -62,7 +63,7 @@ export const ContactForm = () => {
     if (await validations.validate(customer)) {
       checkout.mutate({
         locale: translations.language,
-        products: persistedProducts,
+        products: mapToCheckoutProductList(shoppingCart.products),
         customer: {
           name: `${customer.firstName} ${customer.lastName}`,
           email: customer.email,

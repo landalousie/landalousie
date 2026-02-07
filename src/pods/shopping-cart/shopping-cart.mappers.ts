@@ -33,7 +33,7 @@ export const mapToShoppingCartProducts = (
             productConfig
           )
         )
-        .filter((p) => Boolean(p))
+        .filter((p) => Boolean(p) && !p.isOutOfStock)
     : [];
 
 export const mapToShoppingCart = (

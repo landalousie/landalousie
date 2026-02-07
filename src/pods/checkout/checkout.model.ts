@@ -15,3 +15,8 @@ export const createEmptyCustomer = (): Customer => ({
   phone: '',
   wantInvoice: false,
 });
+
+export interface Product {
+  id: string;
+  quantity: number;
+}

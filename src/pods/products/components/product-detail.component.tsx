@@ -9,6 +9,7 @@ import {
   productConfigQueryOptions,
   productListQueryOptions,
 } from '../products.query';
+import { ProductTag } from './product-tag.component';
 
 export const ProductDetail = () => {
   const { slug } = useParams({ from: '/_shop/products/$slug' });
@@ -49,15 +50,14 @@ export const ProductDetail = () => {
                 alt={product.name}
                 className="h-full w-full object-cover object-center"
               />
-              {product.bioTag?.logo?.url && (
-                <div className="absolute top-4 left-4 z-10 rounded-md bg-white/90 p-2 shadow-sm backdrop-blur-sm transition-transform duration-300 hover:scale-105">
-                  <img
-                    src={product.bioTag.logo.url}
-                    alt={product.bioTag.logo.name}
-                    className="h-8 w-auto"
-                  />
-                </div>
-              )}
+
+              <ProductTag
+                classes={{
+                  root: 'top-4 left-4 p-2',
+                  img: 'h-8',
+                }}
+                product={product}
+              />
             </div>
 
             <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
@@ -84,9 +84,11 @@ export const ProductDetail = () => {
                 </div>
               </div>
 
-              <div className="mt-6 lg:hidden">
-                <AddProduct productId={product.id} canRemove />
-              </div>
+              {!product.isOutOfStock && (
+                <div className="mt-6 lg:hidden">
+                  <AddProduct productId={product.id} canRemove />
+                </div>
+              )}
 
               <div className="mt-6">
                 <h4 className="sr-only">
@@ -99,9 +101,11 @@ export const ProductDetail = () => {
                 </div>
               </div>
 
-              <div className="mt-8 border-t border-gray-200 pt-8 dark:border-gray-700 hidden lg:block">
-                <AddProduct productId={product.id} canRemove />
-              </div>
+              {!product.isOutOfStock && (
+                <div className="mt-8 border-t border-gray-200 pt-8 dark:border-gray-700 hidden lg:block">
+                  <AddProduct productId={product.id} canRemove />
+                </div>
+              )}
             </div>
           </div>
         </div>
