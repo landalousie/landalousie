@@ -8,7 +8,7 @@
   "scripts": {
     "start": "run-p -l start:dev start:stripe-cli",
     "start:dev": "vite dev --host --port 8080",
-    "start:stripe-cli": "dotenvx run --env-file=.env.local -- docker run --rm -e STRIPE_API_KEY --entrypoint /bin/sh stripe/stripe-cli:v1.35.0 -c \"stripe listen --api-key $STRIPE_API_KEY --forward-to http://host.docker.internal:8080/checkout/events\"",
+    "start:stripe-cli": "dotenvx run --env-file=.env.local -- docker run --rm -e STRIPE_API_KEY --entrypoint /bin/sh stripe/stripe-cli:v1.35.0 -c \"stripe listen --api-key $STRIPE_API_KEY --forward-to http://host.docker.internal:8080/api/checkout/events\"",
     "start:email": "email dev --dir ./src/email/templates",
     "build": "vite build",
     "preview": "vite preview",

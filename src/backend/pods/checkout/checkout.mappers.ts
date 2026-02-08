@@ -1,13 +1,16 @@
 import type { Product } from '#contents/product';
 import type { ProductConfig } from '#contents/product-config';
-import type * as emailModel from '#email/core/products/index.ts';
+import type * as emailModel from '#email/common/products/index.ts';
 import type { Stripe } from 'stripe';
+import { formatAssetUrl } from './checkout.helpers';
 
 export const mapToCustomerEmail = (session: Stripe.Checkout.Session): string =>
   session.customer_details?.email ?? session.customer_email ?? '';
 
 export const mapToCustomerName = (session: Stripe.Checkout.Session): string =>
-  session.customer_details?.name ?? mapToCustomerEmail(session);
+  session.metadata?.customerName ??
+  session.customer_details?.name ??
+  mapToCustomerEmail(session);
 
 const mapToProductId = (lineItem: Stripe.LineItem): string =>
   lineItem.price?.product.toString() ?? '';
@@ -29,7 +32,7 @@ const mapStripeProductToEmailProduct = (
   quantity: lineItem.quantity ?? 0,
   priceLabel: `${mapToPrice(lineItem.price?.unit_amount ?? 0)} ${productConfig.priceUnit}`,
   totalPriceLabel: `${mapToPrice(lineItem.amount_total)} ${productConfig.currency}`,
-  imageUrl: product?.image?.url ?? '',
+  imageUrl: formatAssetUrl(product?.image?.url),
 });
 
 export const mapStripeProductsToEmailProducts = (

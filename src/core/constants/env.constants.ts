@@ -7,4 +7,6 @@ export const ENV = {
   ROLLBAR_API_KEY: process.env.ROLLBAR_API_KEY || '',
   ROLLBAR_ENV: process.env.ROLLBAR_ENV || '',
   RESEND_API_KEY: process.env.RESEND_API_KEY || '',
+  DEVELOP_TO_EMAIL: process.env.DEVELOP_TO_EMAIL || '',
+  ENCRYPT_ASSETS_TOKEN: process.env.ENCRYPT_ASSETS_TOKEN || '',
 };

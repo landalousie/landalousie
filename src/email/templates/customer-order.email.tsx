@@ -4,7 +4,7 @@ import {
 } from '#contents/email-translations';
 import { fetchProductConfig, ProductConfig } from '#contents/product-config';
 import { fetchSiteConfig, type SiteConfig } from '#contents/site-config';
-import { ProductList, type Product } from '#email/core/products';
+import { ProductList, type Product } from '#email/common/products';
 import * as email from '@react-email/components';
 import { Button, Head, Header, Root } from '../common/components';
 
@@ -12,10 +12,11 @@ interface Props {
   customerName: string;
   products: Product[];
   totalAmount: string;
-  invoiceUrl?: string;
+  logoUrl: string;
   translations: EmailTranslations;
-  siteConfig?: SiteConfig;
-  productConfig?: ProductConfig;
+  siteConfig: SiteConfig;
+  productConfig: ProductConfig;
+  invoiceUrl?: string;
 }
 
 const CustomerOrder = (props: Props) => {
@@ -23,14 +24,16 @@ const CustomerOrder = (props: Props) => {
     customerName,
     products,
     totalAmount,
-    invoiceUrl,
+    logoUrl,
     translations,
     siteConfig,
     productConfig,
+    invoiceUrl,
   } = props;
 
   return (
     <Root
+      logoUrl={logoUrl}
       translations={translations}
       siteConfig={siteConfig}
       productConfig={productConfig}
@@ -112,6 +115,8 @@ CustomerOrder.PreviewProps = {
     },
   ],
   totalAmount: `63.00 €`,
+  logoUrl:
+    'http://localhost:8080/api/assets/a63f0aa2193322579e0d064879708030:aae56d81739453ebc8d10700e2e74bcc:79253e7f04d6f08e5054c45784ca7137cd09dff8252383291f1df9764bcbaef6db281c49fca567468d677b5a208793a2d5ab816bfa8bd7cc7308c3c24723b3899ffb3d7591c38fb8eaa94d4e1d46413c56b334d4c11ec51248ce0d3c1b5edc47c60243',
   translations: {
     id: '1',
     language: 'fr',

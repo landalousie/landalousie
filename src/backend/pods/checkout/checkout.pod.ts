@@ -1,5 +1,7 @@
+import { fetchEmailConfig } from '#contents/email-config';
 import { fetchProducts } from '#contents/product';
 import { fetchProductConfig } from '#contents/product-config';
+import { fetchSiteConfig } from '#contents/site-config';
 import { resend } from '#core/clients/resend.client';
 import { stripe } from '#core/clients/stripe.client';
 import { ENV } from '#core/constants';
@@ -9,9 +11,14 @@ import { FileRoutesByPath } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/react-start';
 import Stripe from 'stripe';
 import { z } from 'zod';
-import { getInvoiceUrl, getStripeCustomerId } from './checkout.helpers';
+import {
+  formatAssetUrl,
+  getInvoiceUrl,
+  getStripeCustomerId,
+} from './checkout.helpers';
 import {
   mapStripeProductsToEmailProducts,
+  mapToCustomerEmail,
   mapToCustomerName,
   mapToPrice,
   mapToProductIds,
@@ -63,6 +70,8 @@ export const checkout = createServerFn({ method: 'POST' })
           name: 'auto',
         },
         metadata: {
+          customerName: checkout.customer.name,
+          phone: checkout.customer.phone,
           wantInvoiceString: checkout.customer.wantInvoice.toString(),
         },
       });
@@ -124,15 +133,24 @@ export const checkoutSuccess = createServerFn({ method: 'POST' })
         productConfig
       );
       const invoiceUrl = await getInvoiceUrl(session.invoice);
+
+      const siteConfig = await fetchSiteConfig();
+      const logoUrl = formatAssetUrl(siteConfig.favicon?.url);
       const { html, subject } = await getCustomerOrderEmail({
         customerName: mapToCustomerName(session),
         products: emailProducts,
         totalAmount: `${mapToPrice(session.amount_total ?? 0)} ${productConfig.currency}`,
-        invoiceUrl,
+        logoUrl,
+        invoiceUrl: formatAssetUrl(invoiceUrl),
       });
+      const emailConfig = await fetchEmailConfig();
       const { data, error } = await resend.emails.send({
-        from: 'Acme <onboarding@resend.dev>',
-        to: ['delivered@resend.dev'],
+        from: `${emailConfig.fromName} <${emailConfig.fromEmail}>`,
+        to: [
+          ENV.IS_PRODUCTION
+            ? mapToCustomerEmail(session)
+            : ENV.DEVELOP_TO_EMAIL,
+        ],
         html,
         subject,
       });

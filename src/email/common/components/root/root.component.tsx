@@ -1,22 +1,24 @@
+import { generateTailwindPalette } from '#common/helpers';
 import { EmailTranslations } from '#contents/email-translations';
 import { ProductConfig } from '#contents/product-config';
 import { SiteConfig } from '#contents/site-config';
-import { generateTailwindPalette } from '#email/common/helpers';
 import * as email from '@react-email/components';
 import React from 'react';
 import { RootContext, RootProvider } from './root.context';
 
 interface Props extends React.PropsWithChildren {
+  logoUrl: string;
   translations: EmailTranslations;
-  siteConfig?: SiteConfig;
-  productConfig?: ProductConfig;
+  siteConfig: SiteConfig;
+  productConfig: ProductConfig;
 }
 
 export const Root: React.FC<Props> = (props) => {
-  const { children, translations, siteConfig, productConfig } = props;
+  const { children, logoUrl, translations, siteConfig, productConfig } = props;
 
   return (
     <RootProvider
+      logoUrl={logoUrl}
       translations={translations}
       siteConfig={siteConfig}
       productConfig={productConfig}

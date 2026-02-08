@@ -14,10 +14,12 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as CheckoutRouteRouteImport } from './routes/checkout/route'
 import { Route as ShopRouteRouteImport } from './routes/_shop/route'
 import { Route as ShopIndexRouteImport } from './routes/_shop/index'
-import { Route as CheckoutEventsRouteImport } from './routes/checkout/events'
 import { Route as CheckoutCancelRouteImport } from './routes/checkout/cancel'
+import { Route as ApiProductsIndexRouteImport } from './routes/api/products/index'
 import { Route as ShopProductsIndexRouteImport } from './routes/_shop/products/index'
+import { Route as ApiAssetsAssetRouteImport } from './routes/api/assets/$asset'
 import { Route as ShopProductsSlugRouteImport } from './routes/_shop/products/$slug'
+import { Route as ApiCheckoutEventsIndexRouteImport } from './routes/api/checkout/events/index'
 
 const OrderConfirmationRoute = OrderConfirmationRouteImport.update({
   id: '/order-confirmation',
@@ -43,25 +45,35 @@ const ShopIndexRoute = ShopIndexRouteImport.update({
   path: '/',
   getParentRoute: () => ShopRouteRoute,
 } as any)
-const CheckoutEventsRoute = CheckoutEventsRouteImport.update({
-  id: '/events',
-  path: '/events',
-  getParentRoute: () => CheckoutRouteRoute,
-} as any)
 const CheckoutCancelRoute = CheckoutCancelRouteImport.update({
   id: '/cancel',
   path: '/cancel',
   getParentRoute: () => CheckoutRouteRoute,
+} as any)
+const ApiProductsIndexRoute = ApiProductsIndexRouteImport.update({
+  id: '/api/products/',
+  path: '/api/products/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ShopProductsIndexRoute = ShopProductsIndexRouteImport.update({
   id: '/products/',
   path: '/products/',
   getParentRoute: () => ShopRouteRoute,
 } as any)
+const ApiAssetsAssetRoute = ApiAssetsAssetRouteImport.update({
+  id: '/api/assets/$asset',
+  path: '/api/assets/$asset',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ShopProductsSlugRoute = ShopProductsSlugRouteImport.update({
   id: '/products/$slug',
   path: '/products/$slug',
   getParentRoute: () => ShopRouteRoute,
+} as any)
+const ApiCheckoutEventsIndexRoute = ApiCheckoutEventsIndexRouteImport.update({
+  id: '/api/checkout/events/',
+  path: '/api/checkout/events/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -70,19 +82,23 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/order-confirmation': typeof OrderConfirmationRoute
   '/checkout/cancel': typeof CheckoutCancelRoute
-  '/checkout/events': typeof CheckoutEventsRoute
   '/products/$slug': typeof ShopProductsSlugRoute
+  '/api/assets/$asset': typeof ApiAssetsAssetRoute
   '/products/': typeof ShopProductsIndexRoute
+  '/api/products/': typeof ApiProductsIndexRoute
+  '/api/checkout/events/': typeof ApiCheckoutEventsIndexRoute
 }
 export interface FileRoutesByTo {
   '/checkout': typeof CheckoutRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/order-confirmation': typeof OrderConfirmationRoute
   '/checkout/cancel': typeof CheckoutCancelRoute
-  '/checkout/events': typeof CheckoutEventsRoute
   '/': typeof ShopIndexRoute
   '/products/$slug': typeof ShopProductsSlugRoute
+  '/api/assets/$asset': typeof ApiAssetsAssetRoute
   '/products': typeof ShopProductsIndexRoute
+  '/api/products': typeof ApiProductsIndexRoute
+  '/api/checkout/events': typeof ApiCheckoutEventsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -91,10 +107,12 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/order-confirmation': typeof OrderConfirmationRoute
   '/checkout/cancel': typeof CheckoutCancelRoute
-  '/checkout/events': typeof CheckoutEventsRoute
   '/_shop/': typeof ShopIndexRoute
   '/_shop/products/$slug': typeof ShopProductsSlugRoute
+  '/api/assets/$asset': typeof ApiAssetsAssetRoute
   '/_shop/products/': typeof ShopProductsIndexRoute
+  '/api/products/': typeof ApiProductsIndexRoute
+  '/api/checkout/events/': typeof ApiCheckoutEventsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -104,19 +122,23 @@ export interface FileRouteTypes {
     | '/about'
     | '/order-confirmation'
     | '/checkout/cancel'
-    | '/checkout/events'
     | '/products/$slug'
+    | '/api/assets/$asset'
     | '/products/'
+    | '/api/products/'
+    | '/api/checkout/events/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/checkout'
     | '/about'
     | '/order-confirmation'
     | '/checkout/cancel'
-    | '/checkout/events'
     | '/'
     | '/products/$slug'
+    | '/api/assets/$asset'
     | '/products'
+    | '/api/products'
+    | '/api/checkout/events'
   id:
     | '__root__'
     | '/_shop'
@@ -124,10 +146,12 @@ export interface FileRouteTypes {
     | '/about'
     | '/order-confirmation'
     | '/checkout/cancel'
-    | '/checkout/events'
     | '/_shop/'
     | '/_shop/products/$slug'
+    | '/api/assets/$asset'
     | '/_shop/products/'
+    | '/api/products/'
+    | '/api/checkout/events/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -135,6 +159,9 @@ export interface RootRouteChildren {
   CheckoutRouteRoute: typeof CheckoutRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   OrderConfirmationRoute: typeof OrderConfirmationRoute
+  ApiAssetsAssetRoute: typeof ApiAssetsAssetRoute
+  ApiProductsIndexRoute: typeof ApiProductsIndexRoute
+  ApiCheckoutEventsIndexRoute: typeof ApiCheckoutEventsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -174,19 +201,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShopIndexRouteImport
       parentRoute: typeof ShopRouteRoute
     }
-    '/checkout/events': {
-      id: '/checkout/events'
-      path: '/events'
-      fullPath: '/checkout/events'
-      preLoaderRoute: typeof CheckoutEventsRouteImport
-      parentRoute: typeof CheckoutRouteRoute
-    }
     '/checkout/cancel': {
       id: '/checkout/cancel'
       path: '/cancel'
       fullPath: '/checkout/cancel'
       preLoaderRoute: typeof CheckoutCancelRouteImport
       parentRoute: typeof CheckoutRouteRoute
+    }
+    '/api/products/': {
+      id: '/api/products/'
+      path: '/api/products'
+      fullPath: '/api/products/'
+      preLoaderRoute: typeof ApiProductsIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_shop/products/': {
       id: '/_shop/products/'
@@ -195,12 +222,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShopProductsIndexRouteImport
       parentRoute: typeof ShopRouteRoute
     }
+    '/api/assets/$asset': {
+      id: '/api/assets/$asset'
+      path: '/api/assets/$asset'
+      fullPath: '/api/assets/$asset'
+      preLoaderRoute: typeof ApiAssetsAssetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_shop/products/$slug': {
       id: '/_shop/products/$slug'
       path: '/products/$slug'
       fullPath: '/products/$slug'
       preLoaderRoute: typeof ShopProductsSlugRouteImport
       parentRoute: typeof ShopRouteRoute
+    }
+    '/api/checkout/events/': {
+      id: '/api/checkout/events/'
+      path: '/api/checkout/events'
+      fullPath: '/api/checkout/events/'
+      preLoaderRoute: typeof ApiCheckoutEventsIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -223,12 +264,10 @@ const ShopRouteRouteWithChildren = ShopRouteRoute._addFileChildren(
 
 interface CheckoutRouteRouteChildren {
   CheckoutCancelRoute: typeof CheckoutCancelRoute
-  CheckoutEventsRoute: typeof CheckoutEventsRoute
 }
 
 const CheckoutRouteRouteChildren: CheckoutRouteRouteChildren = {
   CheckoutCancelRoute: CheckoutCancelRoute,
-  CheckoutEventsRoute: CheckoutEventsRoute,
 }
 
 const CheckoutRouteRouteWithChildren = CheckoutRouteRoute._addFileChildren(
@@ -240,6 +279,9 @@ const rootRouteChildren: RootRouteChildren = {
   CheckoutRouteRoute: CheckoutRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   OrderConfirmationRoute: OrderConfirmationRoute,
+  ApiAssetsAssetRoute: ApiAssetsAssetRoute,
+  ApiProductsIndexRoute: ApiProductsIndexRoute,
+  ApiCheckoutEventsIndexRoute: ApiCheckoutEventsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

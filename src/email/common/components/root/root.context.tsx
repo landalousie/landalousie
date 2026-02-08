@@ -4,6 +4,7 @@ import type { Font, SiteConfig } from '#contents/site-config';
 import React from 'react';
 
 interface Context {
+  logoUrl: string;
   translations: EmailTranslations;
   siteConfig: SiteConfig;
   productConfig?: ProductConfig;
@@ -14,13 +15,14 @@ export const RootContext = React.createContext<Context>(
 );
 
 interface Props extends React.PropsWithChildren {
+  logoUrl: string;
   translations: EmailTranslations;
-  siteConfig?: SiteConfig;
-  productConfig?: ProductConfig;
+  siteConfig: SiteConfig;
+  productConfig: ProductConfig;
 }
 
 export const RootProvider: React.FC<Props> = (props) => {
-  const { children } = props;
+  const { children, logoUrl, translations, productConfig } = props;
 
   const titleFont: Font = {
     name: props.siteConfig?.titleFont?.name || 'Instrument Sans',
@@ -47,11 +49,12 @@ export const RootProvider: React.FC<Props> = (props) => {
   return (
     <RootContext.Provider
       value={{
-        translations: props.translations,
+        logoUrl,
+        translations,
         siteConfig: {
           ...siteConfig,
         },
-        productConfig: props.productConfig,
+        productConfig,
       }}
     >
       {children}

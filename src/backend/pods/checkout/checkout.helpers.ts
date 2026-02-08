@@ -1,4 +1,7 @@
+import { symmetricEncrypt } from '#common/helpers';
 import { stripe } from '#core/clients/stripe.client';
+import { ENV } from '#core/constants';
+import { FileRoutesByPath } from '@tanstack/react-router';
 import type { Stripe } from 'stripe';
 import type * as model from './checkout.model';
 
@@ -38,4 +41,14 @@ export const getInvoiceUrl = async (
     typeof sessionInvoice === 'string' ? sessionInvoice : sessionInvoice.id;
   const invoice = await stripe.invoices.retrieve(invoiceId);
   return invoice.invoice_pdf ?? invoice.hosted_invoice_url ?? '';
+};
+
+const ASSETS_BASE_URL: keyof FileRoutesByPath = '/api/assets/$asset';
+
+export const formatAssetUrl = (url: string | undefined): string => {
+  if (!url) {
+    return '';
+  }
+
+  return `${ENV.SITE_URL}${ASSETS_BASE_URL.replace('$asset', symmetricEncrypt(url, ENV.ENCRYPT_ASSETS_TOKEN))}`;
 };
