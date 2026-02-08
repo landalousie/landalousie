@@ -5,10 +5,10 @@ import {
   Label,
   Select,
 } from '#common/component';
-import { useValidations } from '#common/hooks/validations.hook.ts';
+import { useValidations } from '#common/hooks';
 import { CloseIcon, SpinnerIcon } from '#common/icons';
-import { useShoppingCart } from '#pods/shopping-cart/shopping-cart.hooks';
-import { translationsQueryOptions } from '#pods/translations/translations.query.ts';
+import { useShoppingCart } from '#pods/shopping-cart';
+import { translationsQueryOptions } from '#pods/translations';
 import { useStore } from '@nanostores/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import React from 'react';

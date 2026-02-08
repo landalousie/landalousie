@@ -1,5 +1,5 @@
 import { mapProductNameToSlug } from '#core/product';
-import { AddProduct } from '#pods/shopping-cart/components';
+import { AddProduct } from '#pods/shopping-cart';
 import { Link } from '@tanstack/react-router';
 import React from 'react';
 import type * as model from '../products.model';

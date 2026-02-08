@@ -1,5 +1,5 @@
 import { Hero } from '#common/component';
-import { pageQueryOptions } from '#pods/page/page.query.ts';
+import { pageQueryOptions } from '#pods/page';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { marked } from 'marked';

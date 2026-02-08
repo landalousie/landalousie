@@ -1,4 +1,4 @@
-import type { NextPickup } from './api/next-pickup.api-model';
+import type { NextPickup } from '#contents/next-pickup';
 
 export const mapNextPickupDescription = (
   description: string,

@@ -1,4 +1,4 @@
-import { WarningIcon } from '#common/icons/warning.icon.tsx';
+import { WarningIcon } from '#common/icons';
 import { translationsQueryOptions } from '#pods/translations';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';

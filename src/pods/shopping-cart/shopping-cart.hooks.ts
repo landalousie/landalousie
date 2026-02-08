@@ -1,7 +1,7 @@
 import {
   productConfigQueryOptions,
   productListQueryOptions,
-} from '#pods/products/products.query';
+} from '#pods/products';
 import { useStore } from '@nanostores/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import React from 'react';

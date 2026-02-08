@@ -1,5 +1,5 @@
-import { useShoppingCart } from '#pods/shopping-cart/shopping-cart.hooks';
-import { translationsQueryOptions } from '#pods/translations/translations.query.ts';
+import { useShoppingCart } from '#pods/shopping-cart';
+import { translationsQueryOptions } from '#pods/translations';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { ContactForm } from './components';
 

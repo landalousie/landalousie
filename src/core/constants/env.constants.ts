@@ -6,4 +6,5 @@ export const ENV = {
   SITE_URL: process.env.SITE_URL || '',
   ROLLBAR_API_KEY: process.env.ROLLBAR_API_KEY || '',
   ROLLBAR_ENV: process.env.ROLLBAR_ENV || '',
+  RESEND_API_KEY: process.env.RESEND_API_KEY || '',
 };

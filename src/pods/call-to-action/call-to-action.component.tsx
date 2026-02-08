@@ -1,6 +1,8 @@
 import { OvalShape, RectangleShape } from '#common/shapes';
-import { mapNextPickupDescription } from '#pods/next-pickup/next-pickup.mappers';
-import { nextPickupQueryOptions } from '#pods/next-pickup/next-pickup.query';
+import {
+  mapNextPickupDescription,
+  nextPickupQueryOptions,
+} from '#pods/next-pickup';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { marked } from 'marked';
 import { callToActionQueryOptions } from './call-to-action.query';

@@ -1,8 +1,8 @@
-import { stripe } from '#core/clients';
+import { fetchProducts } from '#contents/product';
+import { stripe } from '#core/clients/stripe.client';
 import { logger } from '#core/logger';
 import { createServerFn } from '@tanstack/react-start';
 import Stripe from 'stripe';
-import { fetchProducts } from './api';
 
 export const syncProducts = createServerFn({ method: 'POST' }).handler(
   async () => {

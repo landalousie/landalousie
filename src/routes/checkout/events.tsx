@@ -1,5 +1,5 @@
 import { checkoutSuccess } from '#backend/pods/checkout';
-import { stripe } from '#core/clients';
+import { stripe } from '#core/clients/stripe.client';
 import { ENV, STRIPE_SIGNATURE_HEADER } from '#core/constants';
 import { logger } from '#core/logger';
 import { createFileRoute } from '@tanstack/react-router';

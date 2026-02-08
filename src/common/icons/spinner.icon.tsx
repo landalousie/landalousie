@@ -1,4 +1,5 @@
 import cx from 'clsx';
+
 type Props = React.SVGProps<SVGSVGElement>;
 
 export const SpinnerIcon: React.FC<Props> = (props) => {

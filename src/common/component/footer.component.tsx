@@ -1,4 +1,4 @@
-import { translationsQueryOptions } from '#pods/translations/translations.query.ts';
+import { translationsQueryOptions } from '#pods/translations';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import React from 'react';
 

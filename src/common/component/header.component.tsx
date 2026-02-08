@@ -1,6 +1,6 @@
 import { MoonIcon, SunIcon } from '#common/icons';
 import { useTheme } from '#core/theme';
-import { translationsQueryOptions } from '#pods/translations/translations.query.ts';
+import { translationsQueryOptions } from '#pods/translations';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { Link } from '@tanstack/react-router';
 import React from 'react';

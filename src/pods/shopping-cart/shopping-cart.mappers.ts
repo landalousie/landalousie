@@ -1,5 +1,5 @@
 import { mapToPriceLabel } from '#core/product';
-import type * as productListPod from '#pods/products/products.model';
+import type * as productListPod from '#pods/products';
 import type * as model from './shopping-cart.model';
 
 const mapToShoppingCartProduct = (

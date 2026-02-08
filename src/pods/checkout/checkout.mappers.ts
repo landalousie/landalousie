@@ -1,4 +1,4 @@
-import type { Product } from '#pods/shopping-cart/shopping-cart.model';
+import type { Product } from '#pods/shopping-cart';
 import type * as model from './checkout.model';
 
 export const mapToCheckoutProductList = (

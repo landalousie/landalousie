@@ -1,5 +1,5 @@
 import { AddIcon, SubtractIcon } from '#common/icons';
-import { translationsQueryOptions } from '#pods/translations/translations.query.ts';
+import { translationsQueryOptions } from '#pods/translations';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { ClientOnly } from '@tanstack/react-router';
 import cx from 'clsx';

@@ -1,5 +1,5 @@
 import { mapToPriceLabel } from '#core/product';
-import type { ProductConfig } from '#pods/products/products.model';
+import type { ProductConfig } from '#pods/products';
 import type { Product } from './shopping-cart.model';
 
 export const calculateTotalPrice = (

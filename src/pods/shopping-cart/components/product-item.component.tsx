@@ -1,6 +1,6 @@
 import { TrashIcon } from '#common/icons';
 import { mapProductNameToSlug } from '#core/product';
-import { translationsQueryOptions } from '#pods/translations/translations.query.ts';
+import { translationsQueryOptions } from '#pods/translations';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { Link } from '@tanstack/react-router';
 import React from 'react';

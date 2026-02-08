@@ -1,8 +1,11 @@
+import { fetchSiteConfig } from '#contents/site-config';
 import { queryOptions } from '@tanstack/react-query';
-import { fetchSiteConfig } from './api';
+import { createServerFn } from '@tanstack/react-start';
+
+const queryFn = createServerFn().handler(fetchSiteConfig);
 
 export const siteConfigQueryOptions = () =>
   queryOptions({
     queryKey: ['site-config'],
-    queryFn: () => fetchSiteConfig(),
+    queryFn,
   });

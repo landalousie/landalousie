@@ -2,7 +2,7 @@ import { Footer, Header } from '#common/component';
 import { getThemeScript } from '#core/theme';
 import { CallToAction, callToActionQueryOptions } from '#pods/call-to-action';
 import { pageQueryOptions } from '#pods/page';
-import { siteConfigQueryOptions } from '#pods/site-config/';
+import { siteConfigQueryOptions } from '#pods/site-config';
 import { translationsQueryOptions } from '#pods/translations';
 import emojiFont from '@fontsource/noto-color-emoji/emoji.css?url';
 import { TanStackDevtools } from '@tanstack/react-devtools';

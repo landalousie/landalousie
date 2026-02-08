@@ -1,6 +1,6 @@
 import { mapProductNameToSlug } from '#core/product';
-import { AddProduct } from '#pods/shopping-cart/components';
-import { translationsQueryOptions } from '#pods/translations/translations.query.ts';
+import { AddProduct } from '#pods/shopping-cart';
+import { translationsQueryOptions } from '#pods/translations';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useParams, useSearch } from '@tanstack/react-router';
 import { marked } from 'marked';

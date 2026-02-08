@@ -1,8 +1,11 @@
+import { fetchContact } from '#contents/contact';
 import { queryOptions } from '@tanstack/react-query';
-import { fetchContact } from './api';
+import { createServerFn } from '@tanstack/react-start';
+
+const queryFn = createServerFn().handler(fetchContact);
 
 export const contactQueryOptions = () =>
   queryOptions({
     queryKey: ['contact'],
-    queryFn: () => fetchContact(),
+    queryFn,
   });

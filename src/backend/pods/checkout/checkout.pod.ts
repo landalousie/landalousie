@@ -1,10 +1,21 @@
-import { stripe } from '#core/clients';
+import { fetchProducts } from '#contents/product';
+import { fetchProductConfig } from '#contents/product-config';
+import { resend } from '#core/clients/resend.client';
+import { stripe } from '#core/clients/stripe.client';
 import { ENV } from '#core/constants';
 import { logger } from '#core/logger';
+import { getCustomerOrderEmail } from '#email/index.ts';
 import { FileRoutesByPath } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/react-start';
 import Stripe from 'stripe';
 import { z } from 'zod';
+import { getInvoiceUrl, getStripeCustomerId } from './checkout.helpers';
+import {
+  mapStripeProductsToEmailProducts,
+  mapToCustomerName,
+  mapToPrice,
+  mapToProductIds,
+} from './checkout.mappers';
 import * as model from './checkout.model';
 
 export const checkout = createServerFn({ method: 'POST' })
@@ -28,6 +39,7 @@ export const checkout = createServerFn({ method: 'POST' })
           };
         })
       );
+      const customerId = await getStripeCustomerId(checkout.customer);
 
       const successRoute: keyof FileRoutesByPath = '/order-confirmation';
       const cancelRoute: keyof FileRoutesByPath = '/checkout/cancel';
@@ -46,10 +58,11 @@ export const checkout = createServerFn({ method: 'POST' })
         invoice_creation: {
           enabled: checkout.customer.wantInvoice,
         },
-        customer_email: checkout.customer.email,
+        customer: customerId,
+        customer_update: {
+          name: 'auto',
+        },
         metadata: {
-          customerName: checkout.customer.name,
-          customerPhone: checkout.customer.phone,
           wantInvoiceString: checkout.customer.wantInvoice.toString(),
         },
       });
@@ -98,19 +111,41 @@ export const checkoutSuccess = createServerFn({ method: 'POST' })
   .inputValidator((data: Stripe.Checkout.Session) => data)
   .handler(async ({ data: session }) => {
     try {
-      if (session.invoice) {
-        const invoiceId =
-          typeof session.invoice === 'string'
-            ? session.invoice
-            : session.invoice.id;
-        const invoice = await stripe.invoices.retrieve(invoiceId);
-
-        return {
-          invoicePdf: invoice.invoice_pdf,
-          invoiceUrl: invoice.hosted_invoice_url,
-        };
+      const lineItems = await stripe.checkout.sessions.listLineItems(
+        session.id,
+        { limit: 100 }
+      );
+      const productIds = mapToProductIds(lineItems.data);
+      const products = await fetchProducts({ id: { in: productIds } });
+      const productConfig = await fetchProductConfig();
+      const emailProducts = mapStripeProductsToEmailProducts(
+        lineItems.data,
+        products,
+        productConfig
+      );
+      const invoiceUrl = await getInvoiceUrl(session.invoice);
+      const { html, subject } = await getCustomerOrderEmail({
+        customerName: mapToCustomerName(session),
+        products: emailProducts,
+        totalAmount: `${mapToPrice(session.amount_total ?? 0)} ${productConfig.currency}`,
+        invoiceUrl,
+      });
+      const { data, error } = await resend.emails.send({
+        from: 'Acme <onboarding@resend.dev>',
+        to: ['delivered@resend.dev'],
+        html,
+        subject,
+      });
+      if (error) {
+        logger.error(
+          `Error sending order confirmation email for session ${session.id}: ${JSON.stringify(error, null, 2)}`
+        );
+      } else {
+        logger.info(
+          `Order confirmation email sent for session ${session.id}: ${JSON.stringify(data, null, 2)}`
+        );
       }
-      return null;
+      return;
     } catch (error) {
       logger.error(
         `Error processing checkout success for session ${session.id}: ${JSON.stringify(error, null, 2)}`

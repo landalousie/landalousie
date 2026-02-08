@@ -1,9 +1,8 @@
 import { CheckCircleIcon } from '#common/icons';
-import { createEmptyCustomer } from '#pods/checkout/checkout.model.ts';
-import { customerStore } from '#pods/checkout/checkout.stores';
+import { createEmptyCustomer, customerStore } from '#pods/checkout';
 import { NextPickup } from '#pods/next-pickup';
-import { useShoppingCart } from '#pods/shopping-cart/shopping-cart.hooks';
-import { translationsQueryOptions } from '#pods/translations/translations.query';
+import { useShoppingCart } from '#pods/shopping-cart';
+import { translationsQueryOptions } from '#pods/translations';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { Link } from '@tanstack/react-router';
 import React from 'react';

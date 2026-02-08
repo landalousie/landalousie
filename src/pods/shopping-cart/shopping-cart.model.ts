@@ -1,4 +1,4 @@
-import type * as productListPod from '#pods/products/products.model';
+import type * as productListPod from '#pods/products';
 
 export interface PersistedProduct {
   id: string;

@@ -1,9 +1,10 @@
+import type { Product } from '#contents/product';
+import { ProductConfig } from '#contents/product-config';
 import { mapToPriceLabel } from '#core/product';
-import type * as api from './api/products.api-model';
 import type * as model from './products.model';
 
 const mapProductFromApiToModel = (
-  product: api.Product,
+  product: Product,
   productConfig: model.ProductConfig
 ): model.Product => ({
   id: product.id,
@@ -19,7 +20,7 @@ const mapProductFromApiToModel = (
 });
 
 export const mapProductListFromApiToModel = (
-  products: api.Product[],
+  products: Product[],
   productConfig: model.ProductConfig
 ): model.Product[] =>
   Array.isArray(products)
@@ -29,7 +30,7 @@ export const mapProductListFromApiToModel = (
     : [];
 
 export const mapProductConfigFromApiToModel = (
-  productConfig: api.ProductConfig
+  productConfig: ProductConfig
 ): model.ProductConfig => ({
   currency: productConfig.currency,
   taxesLabel: productConfig.taxesLabel,
