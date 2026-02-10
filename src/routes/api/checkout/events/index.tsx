@@ -19,7 +19,6 @@ export const Route = createFileRoute('/api/checkout/events/')({
           switch (event.type) {
             case 'checkout.session.completed': {
               const session = event.data.object;
-              logger.info(`Pago exitoso para la sesión: ${session.id}`);
               await checkoutSuccess({ data: session });
               break;
             }

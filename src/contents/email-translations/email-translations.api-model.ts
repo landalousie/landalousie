@@ -9,4 +9,9 @@ export interface EmailTranslations {
   'customerOrder.invoiceButton': string;
   'productList.quantity': string;
   'productList.total': string;
+  'adminOrder.subject': string;
+  'adminOrder.preview': string;
+  'adminOrder.title': string;
+  'adminOrder.body': string;
+  'adminOrder.footer': string;
 }

@@ -43,6 +43,16 @@ export const getInvoiceUrl = async (
   return invoice.invoice_pdf ?? invoice.hosted_invoice_url ?? '';
 };
 
+export const getPaymentURL = (session: Stripe.Checkout.Session): string => {
+  const envPrefix = session.livemode ? '' : 'test/';
+  return `https://dashboard.stripe.com/${envPrefix}payments/${session.payment_intent}`;
+};
+
+export const getCustomerURL = (session: Stripe.Checkout.Session): string => {
+  const envPrefix = session.livemode ? '' : 'test/';
+  return `https://dashboard.stripe.com/${envPrefix}customers/${session.customer}`;
+};
+
 const ASSETS_BASE_URL: keyof FileRoutesByPath = '/api/assets/$asset';
 
 export const formatAssetUrl = (url: string | undefined): string => {

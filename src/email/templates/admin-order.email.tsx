@@ -7,30 +7,37 @@ import { fetchSiteConfig, type SiteConfig } from '#contents/site-config';
 import { ProductList, type Product } from '#email/common/products';
 import { LanguageCode } from '@content-island/api-client';
 import * as email from '@react-email/components';
-import { Body, Button, Root } from '../common/components';
+import { Body, Root } from '../common/components';
+import { replaceWithComponent } from '../common/helpers';
 
 interface Props {
   customerName: string;
+  customerUrl: string;
+  paymentUrl: string;
   products: Product[];
   totalAmount: string;
   logoUrl: string;
   translations: EmailTranslations;
   siteConfig: SiteConfig;
   productConfig: ProductConfig;
-  invoiceUrl?: string;
 }
 
-const CustomerOrderEmail = (props: Props) => {
+const PAYMENT_REGEX = /\[([^\]]+)\]\(paymentUrl\)/;
+
+const AdminOrderEmail = (props: Props) => {
   const {
     customerName,
+    customerUrl,
+    paymentUrl,
     products,
     totalAmount,
     logoUrl,
     translations,
     siteConfig,
     productConfig,
-    invoiceUrl,
   } = props;
+  const paymentMatch = translations['adminOrder.footer'].match(PAYMENT_REGEX);
+  const paymentLinkText = paymentMatch ? paymentMatch[1] : 'payment details';
 
   return (
     <Root
@@ -40,32 +47,37 @@ const CustomerOrderEmail = (props: Props) => {
       productConfig={productConfig}
     >
       <Body
-        title={translations['customerOrder.title']}
-        preview={translations['customerOrder.preview']}
+        title={translations['adminOrder.title']}
+        preview={translations['adminOrder.preview'].replace(
+          '{{totalAmount}}',
+          totalAmount
+        )}
       >
         <email.Section>
           <email.Text className="text-text text-base">
-            {translations['customerOrder.body'].replace(
+            {replaceWithComponent(
+              translations['adminOrder.body'],
               '{{customerName}}',
-              customerName
+              <email.Link href={customerUrl}>{customerName}</email.Link>
             )}
           </email.Text>
         </email.Section>
         <ProductList products={products} totalAmount={totalAmount} />
-
-        {invoiceUrl && (
-          <email.Section className="text-center mt-8">
-            <Button href={invoiceUrl} variant="secondary">
-              {translations['customerOrder.invoiceButton']}
-            </Button>
-          </email.Section>
-        )}
+        <email.Section>
+          <email.Text className="text-text text-base">
+            {replaceWithComponent(
+              translations['adminOrder.footer'],
+              `[${paymentLinkText}](paymentUrl)`,
+              <email.Link href={paymentUrl}>{paymentLinkText}</email.Link>
+            )}
+          </email.Text>
+        </email.Section>
       </Body>
     </Root>
   );
 };
 
-export const getCustomerOrderEmail = async (
+export const getAdminOrderEmail = async (
   props: Omit<Props, 'translations' | 'siteConfig' | 'productConfig'>
 ) => {
   const [translations, siteConfig, productConfig] = await Promise.all([
@@ -76,23 +88,26 @@ export const getCustomerOrderEmail = async (
 
   return {
     html: await email.render(
-      <CustomerOrderEmail
+      <AdminOrderEmail
         {...props}
         translations={translations}
         siteConfig={siteConfig}
         productConfig={productConfig}
       />
     ),
-    subject: translations['customerOrder.subject'].replace(
-      '{{totalAmount}}',
-      props.totalAmount
+    subject: translations['adminOrder.subject'].replace(
+      '{{customerName}}',
+      props.customerName
     ),
   };
 };
 
 /* Only for email playground dev mode ⬇️ */
-CustomerOrderEmail.PreviewProps = {
+AdminOrderEmail.PreviewProps = {
   customerName: 'John Doe',
+  customerUrl: 'https://dashboard.stripe.com/test/customers/cus_TwkNh6EHzT1GQ1',
+  paymentUrl:
+    'https://dashboard.stripe.com/test/payments/pi_3NQO2aHjYqLZzYpXl5eX9b6p',
   products: [
     {
       id: '1',
@@ -115,19 +130,20 @@ CustomerOrderEmail.PreviewProps = {
   ],
   totalAmount: `63.00 €`,
   logoUrl:
-    'https://prod-content-island.s3.eu-west-3.amazonaws.com/landalousie/landalousie/siteconfig/siteconfig/fr/2026-01-1310-54-35.png',
+    'http://localhost:8080/api/assets/a63f0aa2193322579e0d064879708030:aae56d81739453ebc8d10700e2e74bcc:79253e7f04d6f08e5054c45784ca7137cd09dff8252383291f1df9764bcbaef6db281c49fca567468d677b5a208793a2d5ab816bfa8bd7cc7308c3c24723b3899ffb3d7591c38fb8eaa94d4e1d46413c56b334d4c11ec51248ce0d3c1b5edc47c60243',
   translations: {
     id: '1',
     language: 'en' as LanguageCode,
     lastUpdate: new Date().toISOString(),
-    'customerOrder.subject':
-      "Order received! Your purchase at L'Andalousie (total: {{totalAmount}})",
-    'customerOrder.preview':
-      'Thank you for your purchase — here is the summary and a link to download your invoice.',
-    'customerOrder.title': 'Order Confirmation',
-    'customerOrder.body':
-      'Hello {{customerName}}, here is a summary of your order',
-    'customerOrder.invoiceButton': 'Download my invoice',
+    'adminOrder.subject':
+      'Order received! {{customerName}} has placed an order',
+    'adminOrder.preview':
+      'The customer has completed the order with a total of {{totalAmount}}',
+    'adminOrder.title': 'Order placed',
+    'adminOrder.body':
+      'Customer {{customerName}} has placed the following order:',
+    'adminOrder.footer':
+      'You can view more details about the [payment](paymentUrl)',
     'productList.quantity': 'Quantity',
     'productList.total': 'Total',
   },
@@ -136,5 +152,5 @@ CustomerOrderEmail.PreviewProps = {
   },
 } as Props;
 
-export default CustomerOrderEmail;
+export default AdminOrderEmail;
 /* Only for email playground dev mode ⬆️ */

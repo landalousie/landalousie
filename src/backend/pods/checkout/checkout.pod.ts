@@ -6,14 +6,16 @@ import { resend } from '#core/clients/resend.client';
 import { stripe } from '#core/clients/stripe.client';
 import { ENV } from '#core/constants';
 import { logger } from '#core/logger';
-import { getCustomerOrderEmail } from '#email/index.ts';
+import { getAdminOrderEmail, getCustomerOrderEmail } from '#email/index.ts';
 import { FileRoutesByPath } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/react-start';
 import Stripe from 'stripe';
 import { z } from 'zod';
 import {
   formatAssetUrl,
+  getCustomerURL,
   getInvoiceUrl,
+  getPaymentURL,
   getStripeCustomerId,
 } from './checkout.helpers';
 import {
@@ -68,6 +70,7 @@ export const checkout = createServerFn({ method: 'POST' })
         customer: customerId,
         customer_update: {
           name: 'auto',
+          address: 'auto',
         },
         metadata: {
           customerName: checkout.customer.name,
@@ -135,32 +138,54 @@ export const checkoutSuccess = createServerFn({ method: 'POST' })
       const invoiceUrl = await getInvoiceUrl(session.invoice);
 
       const siteConfig = await fetchSiteConfig();
+      const customerName = mapToCustomerName(session);
       const logoUrl = formatAssetUrl(siteConfig.favicon?.url);
-      const { html, subject } = await getCustomerOrderEmail({
-        customerName: mapToCustomerName(session),
+      const totalAmount = `${mapToPrice(session.amount_total ?? 0)} ${productConfig.currency}`;
+      const customerEmail = await getCustomerOrderEmail({
+        customerName,
         products: emailProducts,
-        totalAmount: `${mapToPrice(session.amount_total ?? 0)} ${productConfig.currency}`,
+        totalAmount,
         logoUrl,
         invoiceUrl: formatAssetUrl(invoiceUrl),
       });
       const emailConfig = await fetchEmailConfig();
-      const { data, error } = await resend.emails.send({
-        from: `${emailConfig.fromName} <${emailConfig.fromEmail}>`,
+      const fromEmail = `${emailConfig.fromName} <${emailConfig.fromEmail}>`;
+      const customerEmailResponse = await resend.emails.send({
+        from: fromEmail,
         to: [
           ENV.IS_PRODUCTION
             ? mapToCustomerEmail(session)
             : ENV.DEVELOP_TO_EMAIL,
         ],
-        html,
-        subject,
+        html: customerEmail.html,
+        subject: customerEmail.subject,
       });
-      if (error) {
+      if (customerEmailResponse.error) {
         logger.error(
-          `Error sending order confirmation email for session ${session.id}: ${JSON.stringify(error, null, 2)}`
+          `Error sending order confirmation email to customer for session ${session.id}: ${JSON.stringify(customerEmailResponse.error, null, 2)}`
         );
       } else {
         logger.info(
-          `Order confirmation email sent for session ${session.id}: ${JSON.stringify(data, null, 2)}`
+          `Order confirmation email sent for session ${session.id}: ${JSON.stringify(customerEmailResponse.data, null, 2)}`
+        );
+      }
+      const adminEmail = await getAdminOrderEmail({
+        customerName,
+        customerUrl: formatAssetUrl(getCustomerURL(session)),
+        paymentUrl: formatAssetUrl(getPaymentURL(session)),
+        products: emailProducts,
+        totalAmount,
+        logoUrl,
+      });
+      const adminEmailResponse = await resend.emails.send({
+        from: fromEmail,
+        to: [emailConfig.toAdminEmail],
+        html: adminEmail.html,
+        subject: adminEmail.subject,
+      });
+      if (adminEmailResponse.error) {
+        logger.error(
+          `Error sending order notification email to admin for session ${session.id}: ${JSON.stringify(adminEmailResponse.error, null, 2)}`
         );
       }
       return;

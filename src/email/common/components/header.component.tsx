@@ -8,16 +8,13 @@ export const Header: React.FC<React.PropsWithChildren> = (props) => {
   return (
     <email.Row>
       <email.Column align="center">
-        <email.Heading as="h1">
+        <email.Heading as="h1" className="mt-0">
           {logoUrl && (
             <email.Img
-              style={{
-                marginBottom: '0.5rem',
-                maxWidth: '450px',
-                width: '100%',
-              }}
               src={logoUrl}
               alt="L'Andalousie logo"
+              width="160"
+              className="block mx-auto mb-3 max-w-30 w-full h-auto object-contain rounded-lg border border-gray-200"
             />
           )}
           {children}
