@@ -50,4 +50,8 @@ export interface WebTranslations {
   'orderConfirmed.subtitle': string;
   'orderConfirmed.pickup.title': string;
   'orderConfirmed.continue.button': string;
+  'notFound.emoji': string;
+  'notFound.title': string;
+  'notFound.body': string;
+  'notFound.link': string;
 }
