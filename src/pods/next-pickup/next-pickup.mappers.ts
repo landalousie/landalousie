@@ -1,6 +1,6 @@
 import type { NextPickup } from '#contents/next-pickup';
 
-export const mapNextPickupDescription = (
+export const mapNextPickupDate = (
   description: string,
   nextPickup: NextPickup
 ): string =>

@@ -7,8 +7,8 @@ import { fetchSiteConfig, type SiteConfig } from '#contents/site-config';
 import { ProductList, type Product } from '#email/common/products';
 import { LanguageCode } from '@content-island/api-client';
 import * as email from '@react-email/components';
+import { Markdown } from '@react-email/markdown';
 import { Body, Root } from '../common/components';
-import { replaceWithComponent } from '../common/helpers';
 
 interface Props {
   customerName: string;
@@ -22,8 +22,6 @@ interface Props {
   productConfig: ProductConfig;
 }
 
-const PAYMENT_REGEX = /\[([^\]]+)\]\(paymentUrl\)/;
-
 const AdminOrderEmail = (props: Props) => {
   const {
     customerName,
@@ -36,9 +34,6 @@ const AdminOrderEmail = (props: Props) => {
     siteConfig,
     productConfig,
   } = props;
-  const paymentMatch = translations['adminOrder.footer'].match(PAYMENT_REGEX);
-  const paymentLinkText = paymentMatch ? paymentMatch[1] : 'payment details';
-
   return (
     <Root
       logoUrl={logoUrl}
@@ -54,23 +49,20 @@ const AdminOrderEmail = (props: Props) => {
         )}
       >
         <email.Section>
-          <email.Text className="text-text text-base">
-            {replaceWithComponent(
-              translations['adminOrder.body'],
-              '{{customerName}}',
-              <email.Link href={customerUrl}>{customerName}</email.Link>
-            )}
-          </email.Text>
+          <Markdown>
+            {translations['adminOrder.body']
+              .replace('{{customerName}}', customerName)
+              .replace('{{customerUrl}}', customerUrl)}
+          </Markdown>
         </email.Section>
         <ProductList products={products} totalAmount={totalAmount} />
         <email.Section>
-          <email.Text className="text-text text-base">
-            {replaceWithComponent(
-              translations['adminOrder.footer'],
-              `[${paymentLinkText}](paymentUrl)`,
-              <email.Link href={paymentUrl}>{paymentLinkText}</email.Link>
+          <Markdown>
+            {translations['adminOrder.footer'].replace(
+              '{{paymentUrl}}',
+              paymentUrl
             )}
-          </email.Text>
+          </Markdown>
         </email.Section>
       </Body>
     </Root>
@@ -141,9 +133,9 @@ AdminOrderEmail.PreviewProps = {
       'The customer has completed the order with a total of {{totalAmount}}',
     'adminOrder.title': 'Order placed',
     'adminOrder.body':
-      'Customer {{customerName}} has placed the following order:',
+      'Customer [{{customerName}}]({{customerUrl}}) has placed the following order:',
     'adminOrder.footer':
-      'You can view more details about the [payment](paymentUrl)',
+      'You can view more details about the [payment]({{paymentUrl}})',
     'productList.quantity': 'Quantity',
     'productList.total': 'Total',
   },

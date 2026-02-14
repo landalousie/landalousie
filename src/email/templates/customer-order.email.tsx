@@ -6,9 +6,10 @@ import { fetchNextPickup, type NextPickup } from '#contents/next-pickup';
 import { fetchProductConfig, ProductConfig } from '#contents/product-config';
 import { fetchSiteConfig, type SiteConfig } from '#contents/site-config';
 import { ProductList, type Product } from '#email/common/products';
-import { mapNextPickupDescription } from '#pods/next-pickup/next-pickup.mappers';
+import { mapNextPickupDate } from '#pods/next-pickup';
 import { LanguageCode } from '@content-island/api-client';
 import * as email from '@react-email/components';
+import { Markdown } from '@react-email/markdown';
 import { Body, Button, Root } from '../common/components';
 
 interface Props {
@@ -57,13 +58,19 @@ const CustomerOrderEmail = (props: Props) => {
         </email.Section>
         <ProductList products={products} totalAmount={totalAmount} />
 
-        <email.Section className="text-center mt-8">
-          <email.Text className="text-text text-base font-semibold">
-            {nextPickup.title}
-          </email.Text>
-          <email.Text className="text-text text-sm">
-            {mapNextPickupDescription(nextPickup.description, nextPickup)}
-          </email.Text>
+        <email.Section className="mt-8 bg-secondary-100 dark:bg-secondary-900 rounded-2xl px-6 py-6 w-full">
+          <email.Row>
+            <email.Column>
+              <email.Text className="text-text text-lg font-bold m-0 mb-4">
+                {nextPickup.title}
+              </email.Text>
+              <div className="text-text text-base m-0 next-pickup-markdown">
+                <Markdown>
+                  {mapNextPickupDate(nextPickup.description, nextPickup)}
+                </Markdown>
+              </div>
+            </email.Column>
+          </email.Row>
         </email.Section>
 
         {invoiceUrl && (
@@ -154,11 +161,13 @@ CustomerOrderEmail.PreviewProps = {
     taxesLabel: 'including taxes',
   },
   nextPickup: {
-    title: 'Date & Point de retrait 📦',
+    language: 'en' as LanguageCode,
+    title: 'Date & Pickup location 📦',
     description:
-      "✍️ RDV pour récupérer ma cagette le {{nextPickupDate}} à L'USINE AU SEQUOIA  - 09240  SENTENAC-DE-SEROU de 18h à 20h.",
+      "✍️ Appointment to pick up my box on {{nextPickupDate}} at [L'USINE AU SEQUOIA  - 09240  SENTENAC-DE-SEROU](https://maps.app.goo.gl/kK5SovqLwLMcajPK7) from 6:00 p.m. to 8:00 p.m.",
     dateTime: new Date('2026-02-23 18:00').toISOString(),
   },
+  invoiceUrl: 'https://example.com/my-invoice.pdf',
 } as Props;
 
 export default CustomerOrderEmail;

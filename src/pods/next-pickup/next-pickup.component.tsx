@@ -1,12 +1,12 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { mapNextPickupDescription } from './next-pickup.mappers';
+import { marked } from 'marked';
+import { mapNextPickupDate } from './next-pickup.mappers';
 import { nextPickupQueryOptions } from './next-pickup.query';
 
 export const NextPickup = () => {
   const { data: nextPickup } = useSuspenseQuery(nextPickupQueryOptions());
-  const description = mapNextPickupDescription(
-    nextPickup.description,
-    nextPickup
+  const description = marked(
+    mapNextPickupDate(nextPickup.description, nextPickup)
   );
 
   return (
@@ -21,7 +21,10 @@ export const NextPickup = () => {
         {nextPickup.title}
       </h2>
       <div className="flex flex-1 flex-col justify-between gap-2">
-        <p className="text-sm">{description}</p>
+        <div
+          className="text-sm"
+          dangerouslySetInnerHTML={{ __html: description }}
+        />
       </div>
     </section>
   );

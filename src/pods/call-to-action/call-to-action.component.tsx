@@ -1,8 +1,5 @@
 import { OvalShape, RectangleShape } from '#common/shapes';
-import {
-  mapNextPickupDescription,
-  nextPickupQueryOptions,
-} from '#pods/next-pickup';
+import { mapNextPickupDate, nextPickupQueryOptions } from '#pods/next-pickup';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { marked } from 'marked';
 import { callToActionQueryOptions } from './call-to-action.query';
@@ -11,7 +8,7 @@ export const CallToAction = () => {
   const { data: nextPickup } = useSuspenseQuery(nextPickupQueryOptions());
   const { data: callToAction } = useSuspenseQuery(callToActionQueryOptions());
   const description = marked(
-    mapNextPickupDescription(callToAction.description, nextPickup)
+    mapNextPickupDate(callToAction.description, nextPickup)
   );
 
   return (
@@ -26,7 +23,10 @@ export const CallToAction = () => {
         >
           {callToAction.title}
         </h2>
-        <div dangerouslySetInnerHTML={{ __html: description }}></div>
+        <div
+          className="flex flex-col gap-6"
+          dangerouslySetInnerHTML={{ __html: description }}
+        ></div>
       </div>
       <div
         className="text-primary-500/25 dark:text-primary-500/35 absolute top-[-15%] left-[-30%] h-60 w-105 md:top-[-15%] md:left-[-16%]"

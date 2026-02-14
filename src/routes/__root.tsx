@@ -1,4 +1,5 @@
 import { Footer, Header } from '#common/component';
+import { configureMarked } from '#core/clients/marked.client';
 import { getThemeScript } from '#core/theme';
 import { CallToAction, callToActionQueryOptions } from '#pods/call-to-action';
 import { pageQueryOptions } from '#pods/page';
@@ -16,6 +17,8 @@ import {
 } from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 import appCss from '../styles.css?url';
+
+configureMarked();
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   {
