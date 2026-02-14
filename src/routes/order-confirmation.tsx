@@ -1,4 +1,4 @@
-import { getOrderConfirmation } from '#backend/pods/checkout';
+import { getOrderConfirmation } from '#backend/checkout';
 import { OrderConfirmation } from '#pods/order-confirmation';
 import { createFileRoute, redirect } from '@tanstack/react-router';
 import { z } from 'zod';

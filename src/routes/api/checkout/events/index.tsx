@@ -1,4 +1,4 @@
-import { checkoutSuccess } from '#backend/pods/checkout';
+import { checkoutSuccess } from '#backend/checkout';
 import { stripe } from '#core/clients/stripe.client';
 import { ENV, STRIPE_SIGNATURE_HEADER } from '#core/constants';
 import { logger } from '#core/logger';

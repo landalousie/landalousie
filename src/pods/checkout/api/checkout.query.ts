@@ -1,4 +1,4 @@
-import { checkout, type Checkout } from '#backend/pods/checkout';
+import { checkout, type Checkout } from '#backend/checkout';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 

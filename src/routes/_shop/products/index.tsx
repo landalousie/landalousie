@@ -1,4 +1,4 @@
-import { syncProducts } from '#backend/pods/products';
+import { syncProducts } from '#backend/products';
 import { ENV } from '#core/constants';
 import { logger } from '#core/logger';
 import { createFileRoute } from '@tanstack/react-router';
