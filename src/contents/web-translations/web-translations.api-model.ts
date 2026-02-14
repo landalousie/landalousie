@@ -8,7 +8,7 @@ export interface WebTranslations {
   'header.a11y.themeButton': string;
   'footer.logoTitle': string;
   'footer.copy': string;
-  'productDetail.navigateBack': string;
+  'page.navigateBack': string;
   'productDetail.notFound': string;
   'productDetail.a11y.productInfo': string;
   'productDetail.a11y.description': string;

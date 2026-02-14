@@ -1,7 +1,9 @@
 import { Hero } from '#common/component';
+import { ArrowLeftIcon } from '#common/icons';
 import { pageQueryOptions } from '#pods/page';
+import { translationsQueryOptions } from '#pods/translations';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { marked } from 'marked';
 
 export const Route = createFileRoute('/about')({
@@ -15,10 +17,18 @@ export const Route = createFileRoute('/about')({
 
 function RouteComponent() {
   const { data: aboutPage } = useSuspenseQuery(pageQueryOptions('about'));
+  const { data: translations } = useSuspenseQuery(translationsQueryOptions());
   const content = marked(aboutPage.content || '');
 
   return (
     <>
+      <Link
+        to="/"
+        className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900"
+      >
+        <ArrowLeftIcon />
+        {translations['page.navigateBack']}
+      </Link>
       <Hero ariaLabelledby="hero-title">
         <div className="flex flex-col gap-2 text-center">
           <h2
