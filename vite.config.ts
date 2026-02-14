@@ -16,7 +16,6 @@ const config = defineConfig(({ mode }) => {
       tanstackStart({
         prerender: {
           enabled: true,
-          crawlLinks: true,
         },
         sitemap: {
           enabled: true,

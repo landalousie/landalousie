@@ -14,7 +14,6 @@ import { Route as OrderConfirmationRouteImport } from './routes/order-confirmati
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as CheckoutRouteRouteImport } from './routes/checkout/route'
 import { Route as ShopRouteRouteImport } from './routes/_shop/route'
-import { Route as CheckoutIndexRouteImport } from './routes/checkout/index'
 import { Route as ShopIndexRouteImport } from './routes/_shop/index'
 import { Route as CheckoutCancelRouteImport } from './routes/checkout/cancel'
 import { Route as ApiProductsIndexRouteImport } from './routes/api/products/index'
@@ -46,11 +45,6 @@ const CheckoutRouteRoute = CheckoutRouteRouteImport.update({
 const ShopRouteRoute = ShopRouteRouteImport.update({
   id: '/_shop',
   getParentRoute: () => rootRouteImport,
-} as any)
-const CheckoutIndexRoute = CheckoutIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => CheckoutRouteRoute,
 } as any)
 const ShopIndexRoute = ShopIndexRouteImport.update({
   id: '/',
@@ -95,7 +89,6 @@ export interface FileRoutesByFullPath {
   '/order-confirmation': typeof OrderConfirmationRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/checkout/cancel': typeof CheckoutCancelRoute
-  '/checkout/': typeof CheckoutIndexRoute
   '/products/$slug': typeof ShopProductsSlugRoute
   '/api/assets/$asset': typeof ApiAssetsAssetRoute
   '/products/': typeof ShopProductsIndexRoute
@@ -103,12 +96,12 @@ export interface FileRoutesByFullPath {
   '/api/checkout/events/': typeof ApiCheckoutEventsIndexRoute
 }
 export interface FileRoutesByTo {
+  '/checkout': typeof CheckoutRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/order-confirmation': typeof OrderConfirmationRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/checkout/cancel': typeof CheckoutCancelRoute
   '/': typeof ShopIndexRoute
-  '/checkout': typeof CheckoutIndexRoute
   '/products/$slug': typeof ShopProductsSlugRoute
   '/api/assets/$asset': typeof ApiAssetsAssetRoute
   '/products': typeof ShopProductsIndexRoute
@@ -124,7 +117,6 @@ export interface FileRoutesById {
   '/robots.txt': typeof RobotsDottxtRoute
   '/checkout/cancel': typeof CheckoutCancelRoute
   '/_shop/': typeof ShopIndexRoute
-  '/checkout/': typeof CheckoutIndexRoute
   '/_shop/products/$slug': typeof ShopProductsSlugRoute
   '/api/assets/$asset': typeof ApiAssetsAssetRoute
   '/_shop/products/': typeof ShopProductsIndexRoute
@@ -140,7 +132,6 @@ export interface FileRouteTypes {
     | '/order-confirmation'
     | '/robots.txt'
     | '/checkout/cancel'
-    | '/checkout/'
     | '/products/$slug'
     | '/api/assets/$asset'
     | '/products/'
@@ -148,12 +139,12 @@ export interface FileRouteTypes {
     | '/api/checkout/events/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/checkout'
     | '/about'
     | '/order-confirmation'
     | '/robots.txt'
     | '/checkout/cancel'
     | '/'
-    | '/checkout'
     | '/products/$slug'
     | '/api/assets/$asset'
     | '/products'
@@ -168,7 +159,6 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/checkout/cancel'
     | '/_shop/'
-    | '/checkout/'
     | '/_shop/products/$slug'
     | '/api/assets/$asset'
     | '/_shop/products/'
@@ -223,13 +213,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof ShopRouteRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/checkout/': {
-      id: '/checkout/'
-      path: '/'
-      fullPath: '/checkout/'
-      preLoaderRoute: typeof CheckoutIndexRouteImport
-      parentRoute: typeof CheckoutRouteRoute
     }
     '/_shop/': {
       id: '/_shop/'
@@ -301,12 +284,10 @@ const ShopRouteRouteWithChildren = ShopRouteRoute._addFileChildren(
 
 interface CheckoutRouteRouteChildren {
   CheckoutCancelRoute: typeof CheckoutCancelRoute
-  CheckoutIndexRoute: typeof CheckoutIndexRoute
 }
 
 const CheckoutRouteRouteChildren: CheckoutRouteRouteChildren = {
   CheckoutCancelRoute: CheckoutCancelRoute,
-  CheckoutIndexRoute: CheckoutIndexRoute,
 }
 
 const CheckoutRouteRouteWithChildren = CheckoutRouteRoute._addFileChildren(
