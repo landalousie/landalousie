@@ -14,10 +14,6 @@ const config = defineConfig(({ mode }) => {
       nitro({ preset: 'vercel' }),
       tailwindcss(),
       tanstackStart({
-        prerender: {
-          enabled: true,
-          crawlLinks: true,
-        },
         sitemap: {
           enabled: true,
           host: env.SITE_URL,
