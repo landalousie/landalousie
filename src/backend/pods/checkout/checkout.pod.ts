@@ -58,14 +58,12 @@ export const checkout = createServerFn({ method: 'POST' })
         success_url: `${origin}${successRoute}?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${origin}${cancelRoute}`,
         locale: checkout.locale as any,
-        billing_address_collection: checkout.customer.wantInvoice
-          ? 'required'
-          : 'auto',
+        billing_address_collection: 'required',
         tax_id_collection: {
-          enabled: checkout.customer.wantInvoice,
+          enabled: true,
         },
         invoice_creation: {
-          enabled: checkout.customer.wantInvoice,
+          enabled: true,
         },
         customer: customerId,
         customer_update: {
@@ -75,7 +73,6 @@ export const checkout = createServerFn({ method: 'POST' })
         metadata: {
           customerName: checkout.customer.name,
           phone: checkout.customer.phone,
-          wantInvoiceString: checkout.customer.wantInvoice.toString(),
         },
       });
 

@@ -12,7 +12,6 @@ const customerSchema = z.object({
   name: z.string().min(1),
   email: z.email(),
   phone: z.string().min(1),
-  wantInvoice: z.boolean(),
 });
 export type Customer = z.infer<typeof customerSchema>;
 

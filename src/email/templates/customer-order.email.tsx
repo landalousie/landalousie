@@ -2,9 +2,11 @@ import {
   fetchEmailTranslations,
   type EmailTranslations,
 } from '#contents/email-translations';
+import { fetchNextPickup, type NextPickup } from '#contents/next-pickup';
 import { fetchProductConfig, ProductConfig } from '#contents/product-config';
 import { fetchSiteConfig, type SiteConfig } from '#contents/site-config';
 import { ProductList, type Product } from '#email/common/products';
+import { mapNextPickupDescription } from '#pods/next-pickup/next-pickup.mappers';
 import { LanguageCode } from '@content-island/api-client';
 import * as email from '@react-email/components';
 import { Body, Button, Root } from '../common/components';
@@ -17,6 +19,7 @@ interface Props {
   translations: EmailTranslations;
   siteConfig: SiteConfig;
   productConfig: ProductConfig;
+  nextPickup: NextPickup;
   invoiceUrl?: string;
 }
 
@@ -29,6 +32,7 @@ const CustomerOrderEmail = (props: Props) => {
     translations,
     siteConfig,
     productConfig,
+    nextPickup,
     invoiceUrl,
   } = props;
 
@@ -53,6 +57,15 @@ const CustomerOrderEmail = (props: Props) => {
         </email.Section>
         <ProductList products={products} totalAmount={totalAmount} />
 
+        <email.Section className="text-center mt-8">
+          <email.Text className="text-text text-base font-semibold">
+            {nextPickup.title}
+          </email.Text>
+          <email.Text className="text-text text-sm">
+            {mapNextPickupDescription(nextPickup.description, nextPickup)}
+          </email.Text>
+        </email.Section>
+
         {invoiceUrl && (
           <email.Section className="text-center mt-8">
             <Button href={invoiceUrl} variant="secondary">
@@ -66,13 +79,18 @@ const CustomerOrderEmail = (props: Props) => {
 };
 
 export const getCustomerOrderEmail = async (
-  props: Omit<Props, 'translations' | 'siteConfig' | 'productConfig'>
+  props: Omit<
+    Props,
+    'translations' | 'siteConfig' | 'productConfig' | 'nextPickup'
+  >
 ) => {
-  const [translations, siteConfig, productConfig] = await Promise.all([
-    fetchEmailTranslations(),
-    fetchSiteConfig(),
-    fetchProductConfig(),
-  ]);
+  const [translations, siteConfig, productConfig, nextPickup] =
+    await Promise.all([
+      fetchEmailTranslations(),
+      fetchSiteConfig(),
+      fetchProductConfig(),
+      fetchNextPickup(),
+    ]);
 
   return {
     html: await email.render(
@@ -81,6 +99,7 @@ export const getCustomerOrderEmail = async (
         translations={translations}
         siteConfig={siteConfig}
         productConfig={productConfig}
+        nextPickup={nextPickup}
       />
     ),
     subject: translations['customerOrder.subject'].replace(
@@ -133,6 +152,12 @@ CustomerOrderEmail.PreviewProps = {
   },
   productConfig: {
     taxesLabel: 'including taxes',
+  },
+  nextPickup: {
+    title: 'Date & Point de retrait 📦',
+    description:
+      "✍️ RDV pour récupérer ma cagette le {{nextPickupDate}} à L'USINE AU SEQUOIA  - 09240  SENTENAC-DE-SEROU de 18h à 20h.",
+    dateTime: new Date('2026-02-23 18:00').toISOString(),
   },
 } as Props;
 

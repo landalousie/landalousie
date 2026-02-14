@@ -1,10 +1,4 @@
-import {
-  Checkbox,
-  ErrorMessage,
-  Input,
-  Label,
-  Select,
-} from '#common/component';
+import { ErrorMessage, Input, Label, Select } from '#common/component';
 import { useValidations } from '#common/hooks';
 import { CloseIcon, SpinnerIcon } from '#common/icons';
 import { useShoppingCart } from '#pods/shopping-cart';
@@ -41,12 +35,6 @@ export const ContactForm = () => {
     validations.validate(newValues, name as keyof model.Customer);
   };
 
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = e.target;
-    const newValues = { ...customer, [name]: checked };
-    customerStore.set(newValues);
-  };
-
   const handlePrefixSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target;
     if (value === 'custom') {
@@ -68,7 +56,6 @@ export const ContactForm = () => {
           name: `${customer.firstName} ${customer.lastName}`,
           email: customer.email,
           phone: `${customer.phonePrefix} ${customer.phone}`,
-          wantInvoice: customer.wantInvoice,
         },
       });
     }
@@ -175,18 +162,6 @@ export const ContactForm = () => {
               validations.getMessage('phone')}
           </ErrorMessage>
         </div>
-      </div>
-
-      <div className="flex items-start gap-2">
-        <Checkbox
-          id="wantInvoice"
-          name="wantInvoice"
-          checked={customer.wantInvoice}
-          onChange={handleCheckboxChange}
-        />
-        <Label htmlFor="wantInvoice" className="cursor-pointer">
-          {translations['checkout.form.wantInvoice']}
-        </Label>
       </div>
       <div>
         <button

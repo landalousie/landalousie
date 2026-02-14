@@ -4,7 +4,7 @@ export interface Customer {
   email: string;
   phonePrefix: string;
   phone: string;
-  wantInvoice: boolean;
+  billingAddress: string;
 }
 
 export const createEmptyCustomer = (): Customer => ({
@@ -13,7 +13,7 @@ export const createEmptyCustomer = (): Customer => ({
   email: '',
   phonePrefix: '+33',
   phone: '',
-  wantInvoice: false,
+  billingAddress: '',
 });
 
 export interface Product {
