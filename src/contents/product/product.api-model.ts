@@ -18,4 +18,5 @@ export interface Product {
   shortDescription?: string;
   isOutOfStock?: boolean;
   bioTag?: BioTag;
+  maxUnits: number;
 }

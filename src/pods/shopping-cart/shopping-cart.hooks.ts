@@ -35,11 +35,12 @@ export const useShoppingCart = () => {
     const currentCart = [...persistedProductListStore.get()];
     const productIndex = currentCart.findIndex((item) => item.id === id);
     if (productIndex !== -1) {
-      const product = currentCart[productIndex];
+      const cartProduct = currentCart[productIndex];
+      const product = products.find((p) => p.id === id)!;
       currentCart[productIndex].quantity =
-        product.quantity >= productConfig.maxUnits
-          ? product.quantity
-          : product.quantity + 1;
+        cartProduct.quantity >= product.maxUnits
+          ? cartProduct.quantity
+          : cartProduct.quantity + 1;
     } else {
       currentCart.push({ id, quantity: 1 });
     }

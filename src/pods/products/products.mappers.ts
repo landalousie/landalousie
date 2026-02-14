@@ -17,6 +17,7 @@ const mapProductFromApiToModel = (
   shortDescription: product.shortDescription,
   isOutOfStock: product.isOutOfStock,
   bioTag: product.bioTag,
+  maxUnits: product.maxUnits,
 });
 
 export const mapProductListFromApiToModel = (
@@ -34,7 +35,6 @@ export const mapProductConfigFromApiToModel = (
 ): model.ProductConfig => ({
   currency: productConfig.currency,
   taxesLabel: productConfig.taxesLabel,
-  maxUnits: productConfig.maxUnits,
   priceUnit: productConfig.priceUnit,
   outOfStockTag: productConfig.outOfStockTag,
 });
