@@ -11,12 +11,12 @@ const config = defineConfig(({ mode }) => {
   return {
     plugins: [
       devtools(),
-      nitro(),
+      nitro({ preset: 'vercel' }),
       tailwindcss(),
       tanstackStart({
         prerender: {
           enabled: true,
-          crawlLinks: false,
+          crawlLinks: true,
         },
         sitemap: {
           enabled: true,
