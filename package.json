@@ -15,7 +15,9 @@
     "test": "vitest run",
     "type:check": "tsc --noEmit",
     "type:check:watch": "tsc --noEmit --watch",
-    "prepare": "husky || echo 'Husky is not installed'"
+    "prepare": "husky || echo 'Husky is not installed'",
+    "deploy": "npm run build && wrangler deploy",
+    "cf-typegen": "wrangler types"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
@@ -47,8 +49,8 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.25.0",
     "@dotenvx/dotenvx": "^1.52.0",
-    "@netlify/vite-plugin-tanstack-start": "^1.2.9",
     "@react-email/preview-server": "^5.2.8",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/devtools-vite": "^0.5.1",
@@ -69,6 +71,7 @@
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
     "vitest": "^4.0.18",
-    "web-vitals": "^5.1.0"
+    "web-vitals": "^5.1.0",
+    "wrangler": "^4.65.0"
   }
 }
