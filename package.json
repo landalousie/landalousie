@@ -37,7 +37,6 @@
     "clsx": "^2.1.1",
     "marked": "^17.0.2",
     "nanostores": "^1.1.0",
-    "nitro": "npm:nitro-nightly@latest",
     "pino": "^10.3.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
@@ -49,6 +48,7 @@
   },
   "devDependencies": {
     "@dotenvx/dotenvx": "^1.52.0",
+    "@netlify/vite-plugin-tanstack-start": "^1.2.9",
     "@react-email/preview-server": "^5.2.8",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/devtools-vite": "^0.5.1",
