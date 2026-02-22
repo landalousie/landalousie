@@ -1,16 +1,25 @@
 import type { Product } from '#contents/product';
 import type { ProductConfig } from '#contents/product-config';
-import type * as emailModel from '#email/common/products/index.ts';
+import type * as emailModel from '#email/common/products';
 import type { Stripe } from 'stripe';
 import { formatAssetUrl } from './checkout.helpers';
 
 export const mapToCustomerEmail = (session: Stripe.Checkout.Session): string =>
   session.customer_details?.email ?? session.customer_email ?? '';
 
-export const mapToCustomerName = (session: Stripe.Checkout.Session): string =>
+const mapSessionToCustomerName = (session: Stripe.Checkout.Session): string =>
   session.metadata?.customerName ??
   session.customer_details?.name ??
   mapToCustomerEmail(session);
+
+export const mapToCustomerName = (
+  session: Stripe.Checkout.Session | Stripe.PaymentIntent
+): string => {
+  if ('customer_details' in session) {
+    return mapSessionToCustomerName(session);
+  }
+  return session.last_payment_error?.payment_method?.billing_details.name ?? '';
+};
 
 const mapToProductId = (lineItem: Stripe.LineItem): string =>
   lineItem.price?.product.toString() ?? '';

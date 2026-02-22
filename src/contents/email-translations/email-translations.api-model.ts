@@ -14,4 +14,8 @@ export interface EmailTranslations {
   'adminOrder.title': string;
   'adminOrder.body': string;
   'adminOrder.footer': string;
+  'checkoutFailed.subject': string;
+  'checkoutFailed.preview': string;
+  'checkoutFailed.title': string;
+  'checkoutFailed.body': string;
 }

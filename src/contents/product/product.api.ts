@@ -1,4 +1,4 @@
-import { contentIsland } from '#core/clients/content-island.client';
+import { contentIsland } from '#core/services/content-island.service';
 import type { ContentListQueryParams } from '@content-island/api-client';
 import type { Product } from './product.api-model';
 

@@ -1,4 +1,4 @@
-import { contentIsland } from '#core/clients/content-island.client';
+import { contentIsland } from '#core/services/content-island.service';
 import type { SiteConfig } from './site-config.api-model';
 
 export const fetchSiteConfig = async () =>

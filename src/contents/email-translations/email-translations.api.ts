@@ -1,4 +1,4 @@
-import { contentIsland } from '#core/clients/content-island.client';
+import { contentIsland } from '#core/services/content-island.service';
 import type { EmailTranslations } from './email-translations.api-model';
 
 export const fetchEmailTranslations = async () =>

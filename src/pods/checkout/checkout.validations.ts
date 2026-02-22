@@ -1,4 +1,4 @@
-import { WebTranslations } from '#contents/web-translations/index.ts';
+import { WebTranslations } from '#contents/web-translations';
 import { create, enforce, only, test } from 'vest';
 import 'vest/enforce/email';
 import type * as model from './checkout.model';

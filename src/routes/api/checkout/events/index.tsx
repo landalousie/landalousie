@@ -1,7 +1,7 @@
-import { checkoutSuccess } from '#backend/checkout';
-import { stripe } from '#core/clients/stripe.client';
+import { checkoutFailed, checkoutSuccess } from '#backend/checkout';
 import { ENV, STRIPE_SIGNATURE_HEADER } from '#core/constants';
 import { logger } from '#core/logger';
+import { stripe } from '#core/services/stripe.service';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/api/checkout/events/')({
@@ -22,16 +22,11 @@ export const Route = createFileRoute('/api/checkout/events/')({
               await checkoutSuccess({ data: session });
               break;
             }
+            case 'checkout.session.expired':
+            case 'payment_intent.payment_failed':
             case 'checkout.session.async_payment_failed': {
               const session = event.data.object;
-              logger.error(`El pago falló para la sesión: ${session.id}`);
-              break;
-            }
-            case 'checkout.session.expired': {
-              const session = event.data.object;
-              logger.info(
-                `Sesión de checkout expirada/abandonada: ${session.id}`
-              );
+              await checkoutFailed({ data: session });
               break;
             }
           }

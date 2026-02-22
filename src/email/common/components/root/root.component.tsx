@@ -10,7 +10,7 @@ interface Props extends React.PropsWithChildren {
   logoUrl: string;
   translations: EmailTranslations;
   siteConfig: SiteConfig;
-  productConfig: ProductConfig;
+  productConfig?: ProductConfig;
 }
 
 export const Root: React.FC<Props> = (props) => {

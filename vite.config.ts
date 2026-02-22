@@ -7,23 +7,29 @@ import { defineConfig, loadEnv } from 'vite';
 
 const config = defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
+  const plugins = [
+    devtools(),
+    tailwindcss(),
+    tanstackStart({
+      prerender: {
+        enabled: true,
+        crawlLinks: true,
+      },
+      sitemap: {
+        enabled: true,
+        host: env.SITE_URL,
+      },
+    }),
+
+    viteReact(),
+  ];
+
+  if (mode === 'production') {
+    plugins.push(netlify());
+  }
+
   return {
-    plugins: [
-      devtools(),
-      tailwindcss(),
-      tanstackStart({
-        prerender: {
-          enabled: true,
-          crawlLinks: true,
-        },
-        sitemap: {
-          enabled: true,
-          host: env.SITE_URL,
-        },
-      }),
-      netlify(),
-      viteReact(),
-    ],
+    plugins,
     server: {
       allowedHosts: ['host.docker.internal'],
     },

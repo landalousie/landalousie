@@ -2,11 +2,15 @@ import { fetchEmailConfig } from '#contents/email-config';
 import { fetchProducts } from '#contents/product';
 import { fetchProductConfig } from '#contents/product-config';
 import { fetchSiteConfig } from '#contents/site-config';
-import { resend } from '#core/clients/resend.client';
-import { stripe } from '#core/clients/stripe.client';
 import { ENV } from '#core/constants';
 import { logger } from '#core/logger';
-import { getAdminOrderEmail, getCustomerOrderEmail } from '#email/index.ts';
+import { resend } from '#core/services/resend.service';
+import { stripe } from '#core/services/stripe.service';
+import {
+  getAdminOrderEmail,
+  getCheckoutFailedEmail,
+  getCustomerOrderEmail,
+} from '#email';
 import { FileRoutesByPath } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/react-start';
 import Stripe from 'stripe';
@@ -14,6 +18,7 @@ import { z } from 'zod';
 import {
   formatAssetUrl,
   getCustomerURL,
+  getFromEmail,
   getInvoiceUrl,
   getPaymentURL,
   getStripeCustomerId,
@@ -145,8 +150,7 @@ export const checkoutSuccess = createServerFn({ method: 'POST' })
         logoUrl,
         invoiceUrl: formatAssetUrl(invoiceUrl),
       });
-      const emailConfig = await fetchEmailConfig();
-      const fromEmail = `${emailConfig.fromName} <${emailConfig.fromEmail}>`;
+      const fromEmail = await getFromEmail();
       const customerEmailResponse = await resend.emails.send({
         from: fromEmail,
         to: [
@@ -174,6 +178,7 @@ export const checkoutSuccess = createServerFn({ method: 'POST' })
         totalAmount,
         logoUrl,
       });
+      const emailConfig = await fetchEmailConfig();
       const adminEmailResponse = await resend.emails.send({
         from: fromEmail,
         to: [emailConfig.toAdminEmail],
@@ -189,6 +194,47 @@ export const checkoutSuccess = createServerFn({ method: 'POST' })
     } catch (error) {
       logger.error(
         `Error processing checkout success for session ${session.id}: ${JSON.stringify(error, null, 2)}`
+      );
+      throw error;
+    }
+  });
+
+export const checkoutFailed = createServerFn({ method: 'POST' })
+  .inputValidator(
+    (data: Stripe.Checkout.Session | Stripe.PaymentIntent) => data
+  )
+  .handler(async ({ data: session }) => {
+    try {
+      const siteConfig = await fetchSiteConfig();
+      const customerName = mapToCustomerName(session);
+      const logoUrl = formatAssetUrl(siteConfig.favicon?.url);
+      const checkoutFailedEmail = await getCheckoutFailedEmail({
+        customerName,
+        customerUrl: formatAssetUrl(getCustomerURL(session)),
+        paymentUrl: formatAssetUrl(getPaymentURL(session)),
+        logoUrl,
+      });
+      const fromEmail = await getFromEmail();
+      const emailConfig = await fetchEmailConfig();
+      const checkoutFailedResponse = await resend.emails.send({
+        from: fromEmail,
+        to: [emailConfig.toAdminEmail],
+        html: checkoutFailedEmail.html,
+        subject: checkoutFailedEmail.subject,
+      });
+      if (checkoutFailedResponse.error) {
+        logger.error(
+          `Error sending checkout failure email to customer for session ${session.id}: ${JSON.stringify(checkoutFailedResponse.error, null, 2)}`
+        );
+      } else {
+        logger.info(
+          `Checkout failure email sent for session ${session.id}: ${JSON.stringify(checkoutFailedResponse.data, null, 2)}`
+        );
+      }
+      return;
+    } catch (error) {
+      logger.error(
+        `Error processing checkout failure for session ${session.id}: ${JSON.stringify(error, null, 2)}`
       );
       throw error;
     }

@@ -1,6 +1,7 @@
 import { symmetricEncrypt } from '#common/helpers';
-import { stripe } from '#core/clients/stripe.client';
+import { fetchEmailConfig } from '#contents/email-config';
 import { ENV } from '#core/constants';
+import { stripe } from '#core/services/stripe.service';
 import { FileRoutesByPath } from '@tanstack/react-router';
 import type { Stripe } from 'stripe';
 import type * as model from './checkout.model';
@@ -43,12 +44,18 @@ export const getInvoiceUrl = async (
   return invoice.invoice_pdf ?? invoice.hosted_invoice_url ?? '';
 };
 
-export const getPaymentURL = (session: Stripe.Checkout.Session): string => {
+export const getPaymentURL = (
+  session: Stripe.Checkout.Session | Stripe.PaymentIntent
+): string => {
   const envPrefix = session.livemode ? '' : 'test/';
-  return `https://dashboard.stripe.com/${envPrefix}payments/${session.payment_intent}`;
+  const paymentIntentId =
+    'payment_intent' in session ? session.payment_intent : session.id;
+  return `https://dashboard.stripe.com/${envPrefix}payments/${paymentIntentId}`;
 };
 
-export const getCustomerURL = (session: Stripe.Checkout.Session): string => {
+export const getCustomerURL = (
+  session: Stripe.Checkout.Session | Stripe.PaymentIntent
+): string => {
   const envPrefix = session.livemode ? '' : 'test/';
   return `https://dashboard.stripe.com/${envPrefix}customers/${session.customer}`;
 };
@@ -61,4 +68,9 @@ export const formatAssetUrl = (url: string | undefined): string => {
   }
 
   return `${ENV.SITE_URL}${ASSETS_BASE_URL.replace('$asset', symmetricEncrypt(url, ENV.ENCRYPT_ASSETS_TOKEN))}`;
+};
+
+export const getFromEmail = async (): Promise<string> => {
+  const emailConfig = await fetchEmailConfig();
+  return `${emailConfig.fromName} <${emailConfig.fromEmail}>`;
 };

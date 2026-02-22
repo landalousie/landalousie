@@ -1,6 +1,6 @@
 import { fetchProducts } from '#contents/product';
-import { stripe } from '#core/clients/stripe.client';
 import { logger } from '#core/logger';
+import { stripe } from '#core/services/stripe.service';
 import { createServerFn } from '@tanstack/react-start';
 import Stripe from 'stripe';
 

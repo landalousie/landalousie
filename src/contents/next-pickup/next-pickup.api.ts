@@ -1,4 +1,4 @@
-import { contentIsland } from '#core/clients/content-island.client';
+import { contentIsland } from '#core/services/content-island.service';
 import type { NextPickup } from './next-pickup.api-model';
 
 export const fetchNextPickup = async () =>

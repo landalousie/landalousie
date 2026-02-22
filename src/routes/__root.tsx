@@ -1,5 +1,5 @@
 import { Footer, Header } from '#common/component';
-import { configureMarked } from '#core/clients/marked.client';
+import { configureMarked } from '#core/services/marked.service';
 import { getThemeScript } from '#core/theme';
 import { CallToAction, callToActionQueryOptions } from '#pods/call-to-action';
 import { pageQueryOptions } from '#pods/page';
