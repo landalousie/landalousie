@@ -8,6 +8,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Config git
+        run: |
+          git config user.email ${{github.repository_owner}}
+
       - name: Deploy
         run: |
           curl -X POST -d '{}' ${{secrets.NETLIFY_BUILD_HOOK_URL}}
